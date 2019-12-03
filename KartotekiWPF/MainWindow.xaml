@@ -5,11 +5,91 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KartotekiWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="GML inż. Marek Wojciechowicz" Height="450" Width="880">
     <Grid>
-        <Button Content="Otwórz" HorizontalAlignment="Left" Margin="235,188,0,0" VerticalAlignment="Top" Width="75" Click="OtworzZPliku"/>
-        <Button Content="Zapisz" HorizontalAlignment="Left" Margin="419,188,0,0" VerticalAlignment="Top" Width="75" Click="ZapiszDoPliku"/>
-        <Button Content="GetFiles" HorizontalAlignment="Left" Margin="333,136,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <Menu DockPanel.Dock="Top" Grid.Row="0" >
+            <MenuItem Header="_Plik">
+                <MenuItem Header="_Otwórz" Click="OtworzZPliku" />
+                <MenuItem Header="_Zapisz">
+
+                    <MenuItem Header="TabelaGML" Click="ZapiszDoPliku" />
+                    <MenuItem Header="TabelaStandard" Click="ZapiszDoPliku" />
+                    
+
+
+
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Zamknij" Click="MenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="_Edycja">
+                
+                <MenuItem Header="_Przekodowanie na GML" Click="GenerujGML" />
+            </MenuItem>
+            <MenuItem Header="Opcje">
+                
+                <MenuItem Header="opcje importu danych">
+                    <Label>Format importu</Label>
+                    <Separator></Separator>
+                    <RadioButton x:Name="importDoc" IsChecked="True"> import Arkuszy.doc</RadioButton>
+                    <RadioButton HorizontalAlignment="Center" x:Name="importTab">
+                    <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock> import .txt rozdzielony tabulatorem</TextBlock>
+                            <TextBlock Margin="10,0,0,0" x:Name="infoImportTxt"  Background="Azure" HorizontalAlignment="Center" ToolTip="[IDOBR]	[IDB]	[NRDZ]	[MIEJSC]	[NRADR]	[STATBUD]	[FUZ]	[RODZKST]	[KLASAPKOB]	[GLFNBUD]	[RBB]	[USTDATYBB]	[PEW]	[LKON]	[LKONP]	[SCN]	[WIATA]"> [info]</TextBlock>
+                
+                    </WrapPanel>
+                    </RadioButton>
+                    <RadioButton x:Name="importWlasny" VerticalContentAlignment="Center">
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                            <Label>Własny separator:</Label>
+                            <TextBox x:Name="textboxSeparatorImport" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="50" Text=""></TextBox>
+                        </WrapPanel>
+                    </RadioButton>
+                </MenuItem>
+                
+                <MenuItem Header="opcje zapisu tabeli">
+                    <Label>Separator</Label>
+                    <Separator></Separator>
+                    <RadioButton x:Name="radioButtonTabulator" IsChecked="True">Tabulator</RadioButton>
+                        <RadioButton x:Name="radioButtonPrzecinek">, przecinek</RadioButton>
+                    <RadioButton x:Name="radioButtonSrednik">; średnik</RadioButton>
+                    <RadioButton x:Name="radioButtonWlasny" VerticalContentAlignment="Center" >
+                        <WrapPanel> <Label>Własny:</Label>
+                        <TextBox x:Name="textboxSeparator" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="50" Text=""></TextBox>
+                        </WrapPanel>
+                    </RadioButton>
+                </MenuItem>
+            </MenuItem>
+
+            <ProgressBar Width="700" x:Name="progresBar" Value="0" />
+
+
+
+
+        </Menu>
+
+        <TabControl Grid.Row="1" Height="AUTO" Width="AUTO">
+            <TabItem Header="TabelaStandard">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid  ItemsSource="{Binding list}"  IsReadOnly="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeColumns="True" 
+                CanUserResizeRows="False" Visibility="Visible" CanUserSortColumns="False" Margin="1,0,1,1" x:Name="dgUsers" MinWidth="200" MinHeight="25" Panel.ZIndex="-6" VerticalGridLinesBrush="#FF292929" SelectedIndex="0" BorderThickness="2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabelaGML">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid  ItemsSource="{Binding list}"  IsReadOnly="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeColumns="True" 
+                CanUserResizeRows="False" Visibility="Visible" CanUserSortColumns="True" Margin="1,0,1,1" x:Name="dgUsersGML" MinWidth="200" MinHeight="25" Panel.ZIndex="-6" VerticalGridLinesBrush="#FF292929" SelectedIndex="0" BorderThickness="2" Grid.ColumnSpan="3"/>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

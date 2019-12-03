@@ -3,11 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace KartotekiWPF
 {
     class Tabela
     {
+        public Tabela()
+        {
+
+        }
+
+
+        public Tabela(string[] liniaZTxt)
+        {
+            if( liniaZTxt.Length == 17)
+            {
+            _idObr = liniaZTxt[0];
+                 _idBud=                       liniaZTxt[1];
+                _nrDz=                         liniaZTxt[2];
+                _miejscowosc=                  liniaZTxt[3];
+                _nrAdr=                        liniaZTxt[4];
+                _statusBud=                    liniaZTxt[5];
+                _fUZ=                          liniaZTxt[6];
+                _rodzKST=                      liniaZTxt[7];
+                _kLASAPKOB=                    liniaZTxt[8];
+                _gLFNBUD=                      liniaZTxt[9];
+                _rBB=                          liniaZTxt[10];
+                _uSTDATYBB=                    liniaZTxt[11];
+                _pEW=                          liniaZTxt[12];
+                _lKON=                         liniaZTxt[13];
+                _lKONP=                        liniaZTxt[14];
+                _sCN=                          liniaZTxt[15];
+                _wIATA = liniaZTxt[16];
+            }
+            else
+            {
+                MessageBox.Show("Niepoprawna liczba elementów \nw wierszu importowanego pliku");
+            }
+        }
+
         public string Reverse(string text)
         {
             char[] cArray = text.ToCharArray();
@@ -20,7 +55,7 @@ namespace KartotekiWPF
         }
 
         char[] teryt = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '-', '_' };
-        char[] charcyfry = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] charcyfry = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         char[] charNrAdr = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z' };
 
         string _idObr;
@@ -51,7 +86,7 @@ namespace KartotekiWPF
             {
                 _idObr = value.Trim();
 
-                _idObr = _idObr.Substring(_idObr.LastIndexOf('.')+1).Trim();
+                _idObr = _idObr.Substring(_idObr.LastIndexOf('.') + 1).Trim();
 
                 for (int i = 0; i < _idObr.Length; i++)
                 {
@@ -80,7 +115,7 @@ namespace KartotekiWPF
                 //    }
                 //}
                 //_idObr = sb.ToString();
-                
+
                 /*
                 if (_idObr[_idObr.Length - 2].Equals('0'))
                 {
@@ -185,7 +220,7 @@ namespace KartotekiWPF
                 //_miejscowosc = _miejscowosc.Replace(" ", "");
                 //_miejscowosc = _miejscowosc.Replace("@", " ");
                 //_miejscowosc = _miejscowosc.Trim();
-              //  _miejscowosc = _miejscowosc.Replace("\n", String.Empty);
+                //  _miejscowosc = _miejscowosc.Replace("\n", String.Empty);
             }
         }
 
@@ -198,23 +233,23 @@ namespace KartotekiWPF
             set
             {
                 _nrAdr = value.Trim();
-              
-                //   StringBuilder sb = new StringBuilder();
-                //    for (int i = 0; i < _nrAdr.Length; i++)
-                //    {
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < _nrAdr.Length; i++)
+                {
 
 
-                //        foreach (var item in charNrAdr)
-                //        {
-                //            if (_nrAdr[i].Equals(item))
-                //            {
-                //                sb.Append(item);
-                //            }
-                //        }
-                //    }
-                //    _nrAdr = sb.ToString();
+                    foreach (var item in charNrAdr)
+                    {
+                        if (_nrAdr[i].Equals(item))
+                        {
+                            sb.Append(item);
+                        }
+                    }
+                }
+                _nrAdr = sb.ToString();
 
-                //    sb.Clear();
+                sb.Clear();
 
                 //    for (int i = _nrAdr.Length - 1; i >= 0; i--)
                 //    {
@@ -226,7 +261,7 @@ namespace KartotekiWPF
                 //    }
 
                 //    _nrAdr = sb.ToString();
-                    
+
 
                 //  _nrAdr = Reverse(_nrAdr);
 
@@ -241,7 +276,8 @@ namespace KartotekiWPF
 
         public string StatusBud
         {
-            get {
+            get
+            {
                 return _statusBud;
             }
             set
@@ -272,9 +308,8 @@ namespace KartotekiWPF
             {
                 return _fUZ;
             }
-            set
+            private set // fuz jest ustawiany w KŚT
             {
-                _fUZ = value.Trim(); 
             }
         }
 
@@ -286,9 +321,12 @@ namespace KartotekiWPF
             }
             set
             {
-                _rodzKST = value.Trim(); 
+                _rodzKST = value.Trim();
+                setFUZ();
             }
         }
+
+
 
         public string KLASAPKOB
         {
@@ -298,7 +336,7 @@ namespace KartotekiWPF
             }
             set
             {
-                _kLASAPKOB = value.Trim(); 
+                _kLASAPKOB = value.Trim();
             }
         }
 
@@ -310,7 +348,7 @@ namespace KartotekiWPF
             }
             set
             {
-                _gLFNBUD = value.Trim(); 
+                _gLFNBUD = value.Trim();
             }
         }
 
@@ -379,7 +417,7 @@ namespace KartotekiWPF
             set
             {
                 _sCN = value.Trim();
-                 if (_sCN.Contains("1") || _sCN.ToLower().Contains("mur"))
+                if (_sCN.Contains("1") || _sCN.ToLower().Contains("mur"))
                 {
                     _sCN = "1";
                 }
@@ -414,16 +452,60 @@ namespace KartotekiWPF
             }
         }
 
+        private void setFUZ()
+        {
+            if (_rodzKST.Equals("110"))
+            {
+                _fUZ = "1";
+            }
+            else if (_rodzKST.Equals("101"))
+            {
+                _fUZ = "2";
+            }
+            else if (_rodzKST.Equals("102"))
+            {
+                _fUZ = "3";
+            }
+            else if (_rodzKST.Equals("103"))
+            {
+                _fUZ = "4";
+            }
+            else if (_rodzKST.Equals("104"))
+            {
+                _fUZ = "5";
+            }
+            else if (_rodzKST.Equals("105"))
+            {
+                _fUZ = "6";
+            }
+            else if (_rodzKST.Equals("106"))
+            {
+                _fUZ = "7";
+            }
+            else if (_rodzKST.Equals("107"))
+            {
+                _fUZ = "8";
+            }
+            else if (_rodzKST.Equals("108"))
+            {
+                _fUZ = "9";
+            }
+            else if (_rodzKST.Equals("109"))
+            {
+                _fUZ = "10";
+            }
+        }
+
         public void wypiszWszystko()
         {
-            Console.WriteLine("ID OBR>" + _idObr+"<");
-            Console.WriteLine("idbud>"+_idBud + "<");
+            Console.WriteLine("ID OBR>" + _idObr + "<");
+            Console.WriteLine("idbud>" + _idBud + "<");
             Console.WriteLine("nrDz>" + _nrDz + "<");
             Console.WriteLine("miejscowosc>" + _miejscowosc + "<");
             Console.WriteLine("nrAdr>" + _nrAdr + "<");
             Console.WriteLine("statbud>" + _statusBud + "<");
             Console.WriteLine("fuz>" + _fUZ + "<");
-            Console.WriteLine("kst>"+_rodzKST + "<");
+            Console.WriteLine("kst>" + _rodzKST + "<");
             Console.WriteLine("pkob>" + _kLASAPKOB + "<");
             Console.WriteLine("glfun>" + _gLFNBUD + "<");
             Console.WriteLine("rokbud>" + _rBB + "<");
@@ -433,8 +515,18 @@ namespace KartotekiWPF
             Console.WriteLine("lkonPodz>" + _lKONP + "<");
             Console.WriteLine("scn>" + _sCN + "<");
             Console.WriteLine("wiata>" + _wIATA + "<");
-
         }
+
+
+
+
+        public string wypiszPoziomoZSeparotorem(string separator)
+        {
+            return _idObr + separator + _idBud + separator + _nrDz + separator + _miejscowosc + separator + _nrAdr + separator +
+                _statusBud + separator + _fUZ + separator + _rodzKST + separator + _kLASAPKOB + separator + _gLFNBUD + separator + _rBB +
+                separator + _uSTDATYBB + separator + _pEW + separator + _lKON + separator + _lKONP + separator + SCN + separator + _wIATA;
+        }
+
     }
 
 

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -25,26 +26,88 @@ namespace KartotekiWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
+        public void wczytanieUstawienDomyślnych()
+        {
+            try
+            {
+                radioButtonTabulator.IsChecked = Properties.Settings.Default.boolImportTab;
+                radioButtonSrednik.IsChecked = Properties.Settings.Default.booImportSrednik;
+                radioButtonPrzecinek.IsChecked = Properties.Settings.Default.boolImportPrzecinek;
+                radioButtonWlasny.IsChecked = Properties.Settings.Default.boolImportWlasny;
+                textboxSeparator.Text = Properties.Settings.Default.textImportWlasny;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("bł wczytanie ustawien domyslnych" + e);
+            }
+        }
+
+        public void zapisUstawienDomyslnych()
+        {
+            try
+            {
+                Properties.Settings.Default.boolImportTab = (bool)radioButtonTabulator.IsChecked;
+                Properties.Settings.Default.booImportSrednik = (bool)radioButtonSrednik.IsChecked;
+                Properties.Settings.Default.boolImportPrzecinek = (bool)radioButtonPrzecinek.IsChecked;
+                Properties.Settings.Default.boolImportWlasny = (bool)radioButtonWlasny.IsChecked;
+                Properties.Settings.Default.textImportWlasny = textboxSeparator.Text;
+                Properties.Settings.Default.Save();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("bł zapisu ustawien domyslnych" + e);
+            }
+        }
+
+
         // public XpsDocument(string path, System.IO.FileAccess packageAccess);
         List<Tabela> wczytaneKartoteki = new List<Tabela>();
+        List<TabelaGML> listaKartotekGML = new List<TabelaGML>();
         public MainWindow()
         {
-           
+
             InitializeComponent();
+            dgUsers.ItemsSource = wczytaneKartoteki;
+            dgUsers.Items.Refresh();
+
+            dgUsersGML.ItemsSource = listaKartotekGML;
+            dgUsersGML.Items.Refresh();
+
+            wczytanieUstawienDomyślnych();
 
         }
 
- 
+        private void UpdateProgress()
+        {
+            progresBar.Value += 1;
+        }
+        private delegate void ProgressBarDelegate();
+
+
+
         string calyOdczzytanyText = "";
         string[] calyOdczzytanyTextLinie = null;
         private void OtworzZPliku(object sender, RoutedEventArgs e)
         {
-        
+
             poczatek:
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.Multiselect = true;
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".txt";
+            if (importTab.IsChecked == true)
+            {
+                dlg.Multiselect = false;
+            }
+            else if (importWlasny.IsChecked == true)
+            {
+                dlg.Multiselect = false;
+            }
+            else
+            {
+                dlg.Multiselect = true;
+            }
+                // Set filter for file extension and default file extension 
+                dlg.DefaultExt = ".txt";
 
             dlg.Filter = "All files(*.*) | *.*|TXT Files (*.txt)|*.txt| CSV(*.csv)|*.csv";
             // Display OpenFileDialog by calling ShowDialog method 
@@ -57,59 +120,136 @@ namespace KartotekiWPF
                 // textBox1.Text = filename;
                 try
                 {
+                    progresBar.Maximum = dlg.FileNames.Count();
                     // calyOdczzytanyText = Plik.odczytZPliku(filename);
                     //Console.WriteLine(filename);
                     //calyOdczzytanyText = Plik.convertDocToTXT(filename);
-                    foreach (var item in dlg.FileNames)
-                    {
-                      calyOdczzytanyTextLinie = Plik.convertDocToTXTLine(item);
 
-                        wczytaneKartoteki.Add(Plik.pobranieWartosciDoGMLZLinii(calyOdczzytanyTextLinie));
+
+                    wczytaneKartoteki.Clear();
+                    listaKartotekGML.Clear();
+
+                    if(importTab.IsChecked == true)
+                    {     
+                            calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
+
+                        foreach (var item in calyOdczzytanyTextLinie)
+                        {
+                            Console.WriteLine(item);
+                            wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item,'\t')));
+
+                            progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+                        }    
+                    }
+                    else if(importWlasny.IsChecked == true)
+                    {
+                        calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
+
+                        foreach (var item in calyOdczzytanyTextLinie)
+                        {
+                           
+                            wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, textboxSeparatorImport.Text)));
+
+                            progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in dlg.FileNames)
+                        {
+                            calyOdczzytanyTextLinie = Plik.convertDocToTXTLine(item);
+
+                            wczytaneKartoteki.Add(Plik.pobranieWartosciDoGMLZLinii(calyOdczzytanyTextLinie));
+                            progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+                        }
                     }
 
-                    foreach (var item in wczytaneKartoteki)
-                    {
-                        Console.WriteLine(item.IdObr + " " + item.NrDz + " " + item.Miejscowosc + item.IdBud );
-                    }
+      
+
+
+
 
                 }
-                catch( Exception esa)
+                catch (Exception esa)
                 {
-                    Console.WriteLine( esa + "goto poczatek catch");
+                    MessageBox.Show(esa.ToString());
+                    Console.WriteLine(esa + "goto poczatek catch");
                     goto poczatek;
                 }
 
-               // Plik.pobranieWartosciDoGML(calyOdczzytanyText);
-               
+                dgUsers.Items.Refresh();
+                progresBar.Value = 0;
+                /*       wczytaneKartoteki.Sort(delegate (Tabela x, Tabela y)
+                        {
+                            if (x.IdObr == null && y.IdObr == null) return 0;
+                            else if (x.IdObr == null) return -1;
+                            else if (y.IdObr == null) return 1;
+                            else return x.IdObr.CompareTo(y.IdObr);
+                        });*/
+
+                // Plik.pobranieWartosciDoGML(calyOdczzytanyText);
+
             }
-
-
         }
 
 
 
         private void ZapiszDoPliku(object sender, RoutedEventArgs e)
         {
+            zapisUstawienDomyslnych();
             SaveFileDialog svd = new SaveFileDialog();
             svd.DefaultExt = "";
             svd.Filter = "All files (*.*)|*.*|Text files (*.txt)|*.txt|HTML (*.html)|*.html|doc (*.doc)|*.doc";
             if (svd.ShowDialog() == true)
             {
 
-
-
-                // Console.WriteLine(bazaDanych.Count() + "count");
-
-
                 using (Stream s = File.Open(svd.FileName + ".txt", FileMode.Create))
                 //  using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
                 using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
-
                     try
                     {
                         try
                         {
-                            sw.Write(calyOdczzytanyText);
+                            StringBuilder sb = new StringBuilder();
+                            string separ = "";
+                          if (radioButtonSrednik.IsChecked == true)
+                            {
+                                separ = ";";
+                            }
+                            else if (radioButtonPrzecinek.IsChecked == true)
+                            {
+                                separ = ",";
+                            }
+                            else if (radioButtonWlasny.IsChecked == true)
+                            {
+                                separ = textboxSeparator.Text;
+                            }
+                            else
+                            {
+                                    separ = "\t";
+                            }
+
+                            if (sender.ToString().Contains("Standard"))
+                            {
+                                foreach (var item in wczytaneKartoteki)
+                                {
+
+                                    sb.AppendLine(item.wypiszPoziomoZSeparotorem(separ));
+
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in listaKartotekGML)
+                                {
+
+                                    sb.AppendLine(item.wypiszPoziomoZSeparotorem(separ));
+
+                                }
+                            }
+
+                            //Console.WriteLine(sb.ToString());
+                            sw.Write(sb.ToString());
                             sw.Close();
                         }
                         catch (Exception exc)
@@ -121,28 +261,25 @@ namespace KartotekiWPF
                     {
                         MessageBox.Show(ex.ToString());
                     }
-
-
-
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.Multiselect = true;
 
-            if (dlg.ShowDialog() == true)
-            {
-
-                Console.WriteLine(  dlg.FileNames);
-                foreach (var item in dlg.FileNames)
-                {
-                    Console.WriteLine(item);
-                }
-
-            }
-               
+            System.Windows.Application.Current.Shutdown();
+            zapisUstawienDomyslnych();
         }
+
+        private void GenerujGML(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in wczytaneKartoteki)
+            {
+                listaKartotekGML.Add(new TabelaGML(item));
+            }
+            dgUsersGML.Items.Refresh();
+        }
+
     }
 }

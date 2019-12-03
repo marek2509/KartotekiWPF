@@ -16,13 +16,14 @@ namespace KartotekiWPF
             try
             {
                 document.LoadFromFile(path);
-
+            
             }catch(Exception exc)
             {
                 Console.WriteLine(exc);
             }
-       
+
             //Save doc file.
+
             return document.GetText();
         }
 
@@ -39,12 +40,31 @@ namespace KartotekiWPF
             {
                 Console.WriteLine(exc);
             }
-
             char[] charSeparators = new char[] { '\n' };
             string[] linie = document.GetText().Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
             return linie;
         }
 
+
+        public static string[] pobranieWartoscZTXT(string LiniaTekstu, char separator)
+        {
+
+
+            char[] charSeparators = new char[] {separator};
+            string[] wartosciZlini =  LiniaTekstu.Split(charSeparators);
+
+            return wartosciZlini;
+        }
+
+        public static string[] pobranieWartoscZTXT(string LiniaTekstu, string separator)
+        {
+
+
+            string[] charSeparators = new string[] { separator };
+            string[] wartosciZlini = LiniaTekstu.Split(charSeparators, StringSplitOptions.None);
+
+            return wartosciZlini;
+        }
 
         public static Tabela pobranieWartosciDoGMLZLinii(string[] textKartoteki)
         {
@@ -55,82 +75,82 @@ namespace KartotekiWPF
                 {
                     if (textKartoteki[i].Contains("miejscowość")) 
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                      //  Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.Miejscowosc = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Identyfikator TERYT miejscowości"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.IdObr = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Numer porządkowy"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                        //Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.nrAdr = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Identyfikator działki ewidencyjnej"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                        tabela.NrDz = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Identyfikator budynku"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.IdBud = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Status budynku"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                      //  Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.StatusBud = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Rodzaj wg KŚT"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.RodzKST = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Klasa wg PKOB"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.KLASAPKOB = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("główna")) //9
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                      //  Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.GLFNBUD = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("budowy") && textKartoteki[i-1].Contains("Data zakończenia"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.RBB = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("budowy") && textKartoteki[i-1].Contains("Stopień pewności daty")) // STOPIEN PEWNOSCI 10
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                      //  Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.USTDATYBB = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Materiał ścian zewnętrznych")) 
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                      //  Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.SCN = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("podziemnych"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.LKONP = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("nadziemnych"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                      //  Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.LKON = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Pole powierzchni zabudowy"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.PEW = textKartoteki[i + 1];
                     }
                     else if (textKartoteki[i].Contains("Informacja czy budynek jest wiatą"))
                     {
-                        Console.WriteLine("item>" + textKartoteki[i + 1]);
+                       // Console.WriteLine("item>" + textKartoteki[i + 1]);
                         tabela.WIATA = textKartoteki[i + 1];
                     }
 
@@ -143,51 +163,8 @@ namespace KartotekiWPF
 
 
 
-            public static void pobranieWartosciDoGML(string textKartoteki) // niedokonczona metoda
-        {
-            Tabela tabela = new Tabela();
 
-            Console.WriteLine(textKartoteki);
-            Console.WriteLine("length1: " + textKartoteki.Length);
-
-          //  textKartoteki = textKartoteki.Replace((char)0, ' ');//textKartoteki[2639] zamiana znakow zapytania 
- 
-
-            //wyszukanie nazwy miejscowosci
-            //int indexMiejscStart = textKartoteki.IndexOf("m i e j s c o w o [") + 19; //<< odczyt dla surowego pliku .doc
-            int indexMiejscStart = textKartoteki.IndexOf("miejscowość") + 11;
-            //  int dlugoscMiejscKoniec = textKartoteki.IndexOf("I d e n t y f i k a t o r   T E R Y T   m i e j s c o w") - indexMiejscStart; //<< odczyt dla surowego pliku .doc 
-            int dlugoscMiejscKoniec = textKartoteki.IndexOf("Identyfikator TERYT miejscowości") - indexMiejscStart;
-            tabela.Miejscowosc = textKartoteki.Substring(indexMiejscStart, dlugoscMiejscKoniec);           
-
-            //wyszukanie id obrebu
-            int indexIdObrStart = textKartoteki.IndexOf("Identyfikator TERYT miejscowości") + 32;
-            int dlugoscIdObrKoniec = textKartoteki.IndexOf("dzielnica") - indexIdObrStart;
-            tabela.IdObr = textKartoteki.Substring(indexIdObrStart, dlugoscIdObrKoniec);
-
-
-            //wyszukanie nr dzialki
-            int indexDzialkaStart = textKartoteki.IndexOf("Identyfikator działki ewidencyjnej") + 34;
-            int dlugoscDzialkaKoniec = textKartoteki.IndexOf("Identyfikator budynku") - indexDzialkaStart;
-            tabela.NrDz = textKartoteki.Substring(indexDzialkaStart, dlugoscDzialkaKoniec);
-
-            //wyszukanie nr porzadkowego
-            int indexNrPorzadkStart = textKartoteki.IndexOf("Numer porządkowy") + 16;
-            int dlugoscNrPorzadkKoniec = textKartoteki.IndexOf("Identyfikator działki ewidencyjnej") - indexNrPorzadkStart;
-            tabela.nrAdr = textKartoteki.Substring(indexNrPorzadkStart, dlugoscNrPorzadkKoniec);
-
-
-
-            Console.WriteLine("tabela miejscowosci:>" + tabela.Miejscowosc + "<end");
-            Console.WriteLine("tabela id obr>" + tabela.IdObr);
-            Console.WriteLine("tabela nrdz : ||>" + tabela.NrDz + "<||");
-            Console.WriteLine("tabela nrADR : ||>" + tabela.nrAdr + "<||");
-        
-        }
-
-
-
-        public static string odczytZPliku(string a) //odczyt z pliku z wyjatkami niepowodzenia należy podać ścieżkę, zwraca tablicę odczytaną z pliku
+        public static string odczytZPlikuCalyTekst(string a) //odczyt z pliku z wyjatkami niepowodzenia należy podać ścieżkę, zwraca tablicę odczytaną z pliku
         {
             string all = "";
              //string[] lines = null;
