@@ -15,7 +15,8 @@
 
         <Menu DockPanel.Dock="Top" Grid.Row="0" >
             <MenuItem Header="_Plik">
-                <MenuItem Header="_Otwórz" Click="OtworzZPliku" />
+                <MenuItem Header="_Otwórz [BUDYNKI]" Click="OtworzZPliku" ToolTip="[IDOBR]	[IDB]	[NRDZ]	[MIEJSC]	[NRADR]	[STATBUD]	[FUZ]	[RODZKST]	[KLASAPKOB]	[GLFNBUD]	[RBB]	[USTDATYBB]	[PEW]	[LKON]	[LKONP]	[SCN]	[WIATA]"/>
+                <MenuItem Header="_Otwórz [DZIALKI]"  ToolTip="Format importu 1-105" Click="otworzDzialki"  />
                 <MenuItem Header="_Zapisz">
 
                     <MenuItem Header="TabelaGML" Click="ZapiszDoPliku" />
@@ -31,11 +32,12 @@
             <MenuItem Header="_Edycja">
                 
                 <MenuItem Header="_Przekodowanie na GML" Click="GenerujGML" />
+                <MenuItem Header="_Kopiuj do tabeli GML" Click="kopiujDoTabeliGML" />
             </MenuItem>
             <MenuItem Header="Opcje">
                 
                 <MenuItem Header="opcje importu danych">
-                    <Label>Format importu</Label>
+                    <Label>Format importu [BUDYNKI]</Label>
                     <Separator></Separator>
                     <RadioButton x:Name="radioButtonimportDoc" GroupName="imp">import Arkuszy.doc</RadioButton>
                     
@@ -73,7 +75,29 @@
                     </RadioButton>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Generuj GML" >
+                <WrapPanel>
+                    <TextBlock>Kod pocztowy:</TextBlock>
+                    <TextBox x:Name="textboxKodPocztowy" Margin="5,0" TextAlignment="Center" Width="50">17-322</TextBox>
+                  
+                </WrapPanel> 
+                <WrapPanel>
+                    <TextBlock>Nazwa miejscowości gdy brak w tabeli:</TextBlock>
+                    <TextBox x:Name="textBoxMiejscowoscGdyBrakWTabeli" Margin="5,0" TextAlignment="Center" Width="200">BORZYMY</TextBox>
 
+                </WrapPanel>
+                <Separator></Separator>
+                <MenuItem x:Name="menuItemBudynki" Header="Nowe budynki" Click="MenuItemBudynki_Click" ToolTip="IDOBR,IDB,NRDZ,STATBUD,FUZ,RODZKST,KLASAPKOB,GLFNBUD,RBB,USTDATYBB,PEW,LKON,LKONP,SCN"/>
+                <MenuItem x:Name="menuItemAdresyDlaBudynków" Header="Adresy dla budynków" Click="MenuItemAdresyDlaBudynków_Click" ToolTip="[IdObr]		[NrBud]&#x0a;**&#x0a;[OBRĘB],,[NrAdr],[KodPocztowy]&#x0a;****"/>
+                <MenuItem x:Name="menuItemAdresyDlaDzialek" Header="Adresy dla działek" Click="MenuItemAdresyDlaDzialek_Click" ToolTip="[IdObr]		[NrDz]&#x0a;**&#x0a;[OBRĘB],,,[kodPocztowy]&#x0a;****"/>
+                <MenuItem x:Name="menuItemDzialkiDlaBudynku" Header="Działki dla budynku"  ToolTip="[IdObr]		[NrBud]&#x0a;**&#x0a;[IdObr]-[NrDz]&#x0a;****" Click="MenuItemDzialkiDlaBudynku_Click"/>
+
+
+
+
+
+
+            </MenuItem>
             <ProgressBar  Width="700" x:Name="progresBar" Value="0"/>
 
 

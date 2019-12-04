@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KartotekiWPF
 {
-    class TabelaGML
+    class TabelaGML : Tabela
     {
         string[,] kodowanieKST = {
             { "101", "102", "103", "104", "105", "106", "107", "108", "109", "110" },
@@ -94,7 +94,26 @@ namespace KartotekiWPF
             this.SCN = tabela.SCN;
             this.WIATA = tabela.WIATA;
         }
-
+        public TabelaGML(Tabela tabela, int podajDowolnaCyfre)
+        {
+            this.IdObr = tabela.IdObr;
+            this.IdBud = tabela.IdBud;
+            this.NrDz = tabela.NrDz;
+            this.Miejscowosc = tabela.Miejscowosc;
+            this.nrAdr = tabela.nrAdr;
+            this._statusBud = tabela.StatusBud;
+            this.FUZ = tabela.FUZ;
+            this._rodzKST = tabela.RodzKST;
+            this._kLASAPKOB = tabela.KLASAPKOB;
+            this._gLFNBUD = tabela.GLFNBUD;
+            this.RBB = tabela.RBB;
+            this._uSTDATYBB = tabela.USTDATYBB;
+            this.PEW = tabela.PEW;
+            this.LKON = tabela.LKON;
+            this.LKONP = tabela.LKONP;
+            this.SCN = tabela.SCN;
+            this.WIATA = tabela.WIATA;
+        }
 
         string _statusBud;
         string _rodzKST;
@@ -209,7 +228,7 @@ namespace KartotekiWPF
         public new string SCN { get; set; }
         public new string WIATA { get; set; }
 
-        public string wypiszPoziomoZSeparotorem(string separator)
+        public new string wypiszPoziomoZSeparotorem(string separator)
         {
             return IdObr + separator + IdBud + separator + NrDz + separator + Miejscowosc + separator + nrAdr + separator +
                 _statusBud + separator + FUZ + separator + _rodzKST + separator + _kLASAPKOB + separator + _gLFNBUD + separator + RBB +

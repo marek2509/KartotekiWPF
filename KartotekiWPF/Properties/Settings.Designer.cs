@@ -130,5 +130,29 @@ namespace KartotekiWPF.Properties {
                 this["textImportwlasny"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string textBoxKodPocztowy {
+            get {
+                return ((string)(this["textBoxKodPocztowy"]));
+            }
+            set {
+                this["textBoxKodPocztowy"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string textBoxMiejcscowoscGdyBrakWTabeli {
+            get {
+                return ((string)(this["textBoxMiejcscowoscGdyBrakWTabeli"]));
+            }
+            set {
+                this["textBoxMiejcscowoscGdyBrakWTabeli"] = value;
+            }
+        }
     }
 }

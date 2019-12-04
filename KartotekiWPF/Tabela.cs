@@ -14,32 +14,58 @@ namespace KartotekiWPF
 
         }
 
+        public Tabela(string idObr, string nrDz)
+        {
+            _idObr = idObr;
+            _idBud = "";
+            _nrDz = nrDz;
+            _miejscowosc = "";
+            _nrAdr = "";
+            _statusBud = "";
+            _fUZ = "";
+            _rodzKST = "";
+            _kLASAPKOB = "";
+            _gLFNBUD = "";
+            _rBB = "";
+            _uSTDATYBB = "";
+            _pEW = "";
+            _lKON = "";
+            _lKONP = "";
+            _sCN = "";
+            _wIATA = "";
+        }
+
 
         public Tabela(string[] liniaZTxt)
         {
-            if( liniaZTxt.Length == 17)
+            if (liniaZTxt.Length == 17)
             {
-            _idObr = liniaZTxt[0];
-                 _idBud=                       liniaZTxt[1];
-                _nrDz=                         liniaZTxt[2];
-                _miejscowosc=                  liniaZTxt[3];
-                _nrAdr=                        liniaZTxt[4];
-                _statusBud=                    liniaZTxt[5];
-                _fUZ=                          liniaZTxt[6];
-                _rodzKST=                      liniaZTxt[7];
-                _kLASAPKOB=                    liniaZTxt[8];
-                _gLFNBUD=                      liniaZTxt[9];
-                _rBB=                          liniaZTxt[10];
-                _uSTDATYBB=                    liniaZTxt[11];
-                _pEW=                          liniaZTxt[12];
-                _lKON=                         liniaZTxt[13];
-                _lKONP=                        liniaZTxt[14];
-                _sCN=                          liniaZTxt[15];
+                _idObr = liniaZTxt[0];
+                _idBud = liniaZTxt[1];
+                _nrDz = liniaZTxt[2];
+                _miejscowosc = liniaZTxt[3];
+                _nrAdr = liniaZTxt[4];
+                _statusBud = liniaZTxt[5];
+                _fUZ = liniaZTxt[6];
+                _rodzKST = liniaZTxt[7];
+                _kLASAPKOB = liniaZTxt[8];
+                _gLFNBUD = liniaZTxt[9];
+                _rBB = liniaZTxt[10];
+                _uSTDATYBB = liniaZTxt[11];
+                _pEW = liniaZTxt[12];
+                _lKON = liniaZTxt[13];
+                _lKONP = liniaZTxt[14];
+                _sCN = liniaZTxt[15];
                 _wIATA = liniaZTxt[16];
             }
             else
             {
-                MessageBox.Show("Niepoprawna liczba elementów \nw wierszu importowanego pliku");
+                var resultat = MessageBox.Show("Niepoprawna liczba elementów \nw wierszu importowanego pliku. Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                if (resultat == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+                }
             }
         }
 

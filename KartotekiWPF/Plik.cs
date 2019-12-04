@@ -56,12 +56,12 @@ namespace KartotekiWPF
             return wartosciZlini;
         }
 
-        public static string[] pobranieWartoscZTXT(string LiniaTekstu, string separator)
+        public static string[] pobranieWartoscZTXT(string LiniaTekstu, string separator, StringSplitOptions a = StringSplitOptions.None)
         {
 
 
             string[] charSeparators = new string[] { separator };
-            string[] wartosciZlini = LiniaTekstu.Split(charSeparators, StringSplitOptions.None);
+            string[] wartosciZlini = LiniaTekstu.Split(charSeparators, a);
 
             return wartosciZlini;
         }
@@ -164,7 +164,7 @@ namespace KartotekiWPF
 
 
 
-        public static string odczytZPlikuCalyTekst(string a) //odczyt z pliku z wyjatkami niepowodzenia należy podać ścieżkę, zwraca tablicę odczytaną z pliku
+        public static string odczytZPlikuCalyTekst(string a) //odczyt z pliku z wyjatkami niepowodzenia należy podać ścieżkę, zwraca cały text
         {
             string all = "";
              //string[] lines = null;

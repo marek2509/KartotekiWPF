@@ -43,6 +43,9 @@ namespace KartotekiWPF
                 importWlasny.IsChecked = Properties.Settings.Default.boolImportDOC;
                 textboxSeparatorImport.Text = Properties.Settings.Default.textImportwlasny;
 
+                textboxKodPocztowy.Text = Properties.Settings.Default.textBoxKodPocztowy;
+                textBoxMiejscowoscGdyBrakWTabeli.Text = Properties.Settings.Default.textBoxMiejcscowoscGdyBrakWTabeli;
+
                 if (!((bool)radioButtonimportDoc.IsChecked || (bool)importTab.IsChecked || (bool)importWlasny.IsChecked))
                 {
                     radioButtonimportDoc.IsChecked = true;
@@ -69,7 +72,9 @@ namespace KartotekiWPF
                 Properties.Settings.Default.boolImportDOC = (bool)importWlasny.IsChecked;
                 Properties.Settings.Default.textImportwlasny = textboxSeparatorImport.Text;
 
-         
+                Properties.Settings.Default.textBoxKodPocztowy = textboxKodPocztowy.Text;
+                Properties.Settings.Default.textBoxMiejcscowoscGdyBrakWTabeli = textBoxMiejscowoscGdyBrakWTabeli.Text;
+
                 Properties.Settings.Default.Save();
             }
             catch (Exception e)
@@ -84,7 +89,7 @@ namespace KartotekiWPF
         List<TabelaGML> listaKartotekGML = new List<TabelaGML>();
         public MainWindow()
         {
-           
+
             InitializeComponent();
             wczytanieUstawienDomyślnych();
             dgUsers.ItemsSource = wczytaneKartoteki;
@@ -104,8 +109,6 @@ namespace KartotekiWPF
             {
                 Console.WriteLine("błąd odczytu versji");
             }
-
-
         }
 
         private void UpdateProgress()
@@ -131,12 +134,12 @@ namespace KartotekiWPF
             {
                 dlg.Multiselect = false;
             }
-            else if(radioButtonimportDoc.IsChecked == true)
+            else if (radioButtonimportDoc.IsChecked == true)
             {
                 dlg.Multiselect = true;
             }
-                // Set filter for file extension and default file extension 
-                dlg.DefaultExt = ".txt";
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".txt";
 
             dlg.Filter = "All files(*.*) | *.*|TXT Files (*.txt)|*.txt| CSV(*.csv)|*.csv";
             // Display OpenFileDialog by calling ShowDialog method 
@@ -159,25 +162,25 @@ namespace KartotekiWPF
                     wczytaneKartoteki.Clear();
                     listaKartotekGML.Clear();
                     calyProgram.IsEnabled = false;
-                    if(importTab.IsChecked == true)
-                    {     
-                            calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
-
-                        foreach (var item in calyOdczzytanyTextLinie)
-                        {
-                            Console.WriteLine(item);
-                            wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item,'\t')));
-
-                            progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
-                        }    
-                    }
-                    else if(importWlasny.IsChecked == true)
+                    if (importTab.IsChecked == true)
                     {
                         calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
 
                         foreach (var item in calyOdczzytanyTextLinie)
                         {
-                           
+                            Console.WriteLine(item);
+                            wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, '\t')));
+
+                            progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+                        }
+                    }
+                    else if (importWlasny.IsChecked == true)
+                    {
+                        calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
+
+                        foreach (var item in calyOdczzytanyTextLinie)
+                        {
+
                             wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, textboxSeparatorImport.Text)));
 
                             progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
@@ -197,9 +200,14 @@ namespace KartotekiWPF
                 }
                 catch (Exception esa)
                 {
-                    MessageBox.Show(esa.ToString());
+                    /*var resultat = MessageBox.Show(esa.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                    if (resultat == MessageBoxResult.Yes)
+                    {
+                        goto poczatek;
+                    }
                     Console.WriteLine(esa + "goto poczatek catch");
-                    goto poczatek;
+                   */
                 }
 
                 dgUsers.Items.Refresh();
@@ -229,7 +237,7 @@ namespace KartotekiWPF
             if (svd.ShowDialog() == true)
             {
 
-                using (Stream s = File.Open(svd.FileName + ".txt", FileMode.Create))
+                using (Stream s = File.Open(svd.FileName, FileMode.Create))
                 //  using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
                 using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
                     try
@@ -238,7 +246,7 @@ namespace KartotekiWPF
                         {
                             StringBuilder sb = new StringBuilder();
                             string separ = "";
-                          if (radioButtonSrednik.IsChecked == true)
+                            if (radioButtonSrednik.IsChecked == true)
                             {
                                 separ = ";";
                             }
@@ -252,7 +260,7 @@ namespace KartotekiWPF
                             }
                             else
                             {
-                                    separ = "\t";
+                                separ = "\t";
                             }
 
                             if (sender.ToString().Contains("Standard"))
@@ -280,12 +288,22 @@ namespace KartotekiWPF
                         }
                         catch (Exception exc)
                         {
-                            MessageBox.Show(exc.ToString() + "  problem z plikiem");
+                            var resultat = MessageBox.Show(exc.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                            if (resultat == MessageBoxResult.Yes)
+                            {
+                                Application.Current.Shutdown();
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                        var resultat = MessageBox.Show(ex.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                        if (resultat == MessageBoxResult.Yes)
+                        {
+                            Application.Current.Shutdown();
+                        }
                     }
             }
         }
@@ -307,5 +325,227 @@ namespace KartotekiWPF
             dgUsersGML.Items.Refresh();
         }
 
+        private void MenuItemAdresyDlaBudynków_Click(object sender, RoutedEventArgs e)
+        {
+            zapisUstawienDomyslnych();
+            SaveFileDialog svd = new SaveFileDialog();
+            svd.DefaultExt = "";
+            svd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (svd.ShowDialog() == true)
+            {
+
+                using (Stream s = File.Open(svd.FileName, FileMode.Create))
+                //  using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                    try
+                    {
+                        try
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            string separ = "";
+
+                            foreach (var item in listaKartotekGML)
+                            {
+
+                                sb.AppendLine(item.IdObr + "\t" + item.IdBud);
+                                sb.AppendLine("**");
+                                sb.AppendLine(item.Miejscowosc + ",," + item.nrAdr + "," + textboxKodPocztowy.Text.Trim().ToUpper());
+                                sb.AppendLine("****");
+                            }
+
+
+                            //Console.WriteLine(sb.ToString());
+                            sw.Write(sb.ToString());
+                            sw.Close();
+                        }
+                        catch (Exception exc)
+                        {
+                            MessageBox.Show(exc.ToString() + "  problem z plikiem");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        var resultat = MessageBox.Show(ex.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                        if (resultat == MessageBoxResult.Yes)
+                        {
+                            Application.Current.Shutdown();
+                        }
+                    }
+            }
+        }
+
+        private void kopiujDoTabeliGML(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in wczytaneKartoteki)
+            {
+                listaKartotekGML.Add(new TabelaGML(item, 0));
+            }
+
+            dgUsersGML.Items.Refresh();
+        }
+
+        private void otworzDzialki(object sender, RoutedEventArgs e)
+        {
+            poczatek:
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".txt";
+
+            dlg.Filter = "All files(*.*) | *.*|TXT Files (*.txt)|*.txt| CSV(*.csv)|*.csv";
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+            // Get the selected file name 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+
+
+                try
+                {
+                    wczytaneKartoteki.Clear();
+                    listaKartotekGML.Clear();
+                    calyProgram.IsEnabled = false;
+
+                    calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
+
+                    foreach (var item in calyOdczzytanyTextLinie)
+                    {
+                        // Console.WriteLine(item);
+
+                        wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, '-')[0], Plik.pobranieWartoscZTXT(item, '-')[1]));
+
+
+                        progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+                    }
+                    calyProgram.IsEnabled = true;
+                    dgUsers.Items.Refresh();
+                    dgUsersGML.Items.Refresh();
+                }
+                catch (Exception esa)
+                {
+
+                    var resultat = MessageBox.Show(esa.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                    if (resultat == MessageBoxResult.Yes)
+                    {
+                        Application.Current.Shutdown();
+                    }
+
+                    Console.WriteLine(esa + "Błędny format importu działek");
+                    goto poczatek;
+                }
+            }
+        }
+
+        private void MenuItemAdresyDlaDzialek_Click(object sender, RoutedEventArgs e)
+        {
+            zapisUstawienDomyslnych();
+            SaveFileDialog svd = new SaveFileDialog();
+            svd.DefaultExt = ".txt";
+            svd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (svd.ShowDialog() == true)
+            {
+
+                using (Stream s = File.Open(svd.FileName, FileMode.Create))
+                //  using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                    try
+                    {
+                        try
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            string separ = "";
+
+                            foreach (var item in listaKartotekGML)
+                            {
+                                sb.AppendLine(item.IdObr + "\t" + item.NrDz);
+                                sb.AppendLine("**");
+                                Console.WriteLine("item>" + item.Miejscowosc);
+                                if (!item.Miejscowosc.Equals(""))
+                                {
+                                    sb.AppendLine(item.Miejscowosc + ",,," + textboxKodPocztowy.Text.Trim().ToUpper());
+                                }
+                                else
+                                {
+                                    sb.AppendLine(textBoxMiejscowoscGdyBrakWTabeli.Text.Trim().ToUpper() + ",,," + textboxKodPocztowy.Text.Trim().ToUpper());
+                                }
+                                sb.AppendLine("****");
+                            }
+
+
+                            //Console.WriteLine(sb.ToString());
+                            sw.Write(sb.ToString());
+                            sw.Close();
+                        }
+                        catch (Exception exc)
+                        {
+                            MessageBox.Show(exc.ToString() + "  problem z plikiem");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        var resultat = MessageBox.Show(ex.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                        if (resultat == MessageBoxResult.Yes)
+                        {
+                            Application.Current.Shutdown();
+                        }
+                    }
+            }
+        }
+
+        private void MenuItemBudynki_Click(object sender, RoutedEventArgs e)
+        {
+            zapisUstawienDomyslnych();
+            SaveFileDialog svd = new SaveFileDialog();
+            svd.DefaultExt = ".txt";
+            svd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (svd.ShowDialog() == true)
+            {
+                using (Stream s = File.Open(svd.FileName, FileMode.Create))
+                //  using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                    try
+                    {
+                        try
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            sb.AppendLine("IDOBR,IDB,NRDZ,STATBUD,FUZ,RODZKST,KLASAPKOB,GLFNBUD,RBB,USTDATYBB,PEW,LKON,LKONP,SCN");
+                            foreach (var item in listaKartotekGML)
+                            {
+                                    sb.AppendLine(item.IdObr + ",\"" + item.IdBud + "\",\"" + item.NrDz + "\"," + item.StatusBud + "," + item.FUZ + "," + item.RodzKST 
+                                        + "," + item.KLASAPKOB + "," + item.GLFNBUD + "," + item.RBB + "," + item.USTDATYBB + "," + item.PEW + "," + item.LKON 
+                                        + "," + item.LKONP + "," + item.SCN);
+                            }
+
+
+                            //Console.WriteLine(sb.ToString());
+                            sw.Write(sb.ToString());
+                            sw.Close();
+                        }
+                        catch (Exception exc)
+                        {
+                            MessageBox.Show(exc.ToString() + "  problem z plikiem");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        var resultat = MessageBox.Show(ex.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                        if (resultat == MessageBoxResult.Yes)
+                        {
+                            Application.Current.Shutdown();
+                        }
+                    }
+
+            }
+        }
+
+        private void MenuItemDzialkiDlaBudynku_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
