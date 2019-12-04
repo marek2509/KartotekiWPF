@@ -147,6 +147,7 @@ namespace KartotekiWPF
                 // Open document 
                 string filename = dlg.FileName;
                 // textBox1.Text = filename;
+
                 try
                 {
                     progresBar.Maximum = dlg.FileNames.Count();
@@ -157,7 +158,7 @@ namespace KartotekiWPF
 
                     wczytaneKartoteki.Clear();
                     listaKartotekGML.Clear();
-
+                    calyProgram.IsEnabled = false;
                     if(importTab.IsChecked == true)
                     {     
                             calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
@@ -192,6 +193,7 @@ namespace KartotekiWPF
                             progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
                         }
                     }
+                    calyProgram.IsEnabled = true;
                 }
                 catch (Exception esa)
                 {
@@ -201,6 +203,7 @@ namespace KartotekiWPF
                 }
 
                 dgUsers.Items.Refresh();
+                dgUsersGML.Items.Refresh();
                 progresBar.Value = 0;
                 /*       wczytaneKartoteki.Sort(delegate (Tabela x, Tabela y)
                         {

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:KartotekiWPF"
         mc:Ignorable="d"
         Title="GML inż. Marek Wojciechowicz" Height="450" Width="880">
-    <Grid>
+    <Grid x:Name="calyProgram">
         <Grid.RowDefinitions>
             <RowDefinition Height="18"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
