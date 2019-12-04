@@ -25,6 +25,78 @@ namespace KartotekiWPF.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool boolExportTab {
+            get {
+                return ((bool)(this["boolExportTab"]));
+            }
+            set {
+                this["boolExportTab"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool booIExportsrednik {
+            get {
+                return ((bool)(this["booIExportsrednik"]));
+            }
+            set {
+                this["booIExportsrednik"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool boolExportPrzecinek {
+            get {
+                return ((bool)(this["boolExportPrzecinek"]));
+            }
+            set {
+                this["boolExportPrzecinek"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool boolExportWlasny {
+            get {
+                return ((bool)(this["boolExportWlasny"]));
+            }
+            set {
+                this["boolExportWlasny"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string textExportWlasny {
+            get {
+                return ((string)(this["textExportWlasny"]));
+            }
+            set {
+                this["textExportWlasny"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool boolImportDOC {
+            get {
+                return ((bool)(this["boolImportDOC"]));
+            }
+            set {
+                this["boolImportDOC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool boolImportTab {
             get {
@@ -32,30 +104,6 @@ namespace KartotekiWPF.Properties {
             }
             set {
                 this["boolImportTab"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool booImportSrednik {
-            get {
-                return ((bool)(this["booImportSrednik"]));
-            }
-            set {
-                this["booImportSrednik"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool boolImportPrzecinek {
-            get {
-                return ((bool)(this["boolImportPrzecinek"]));
-            }
-            set {
-                this["boolImportPrzecinek"] = value;
             }
         }
         
@@ -74,12 +122,12 @@ namespace KartotekiWPF.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string textImportWlasny {
+        public string textImportwlasny {
             get {
-                return ((string)(this["textImportWlasny"]));
+                return ((string)(this["textImportwlasny"]));
             }
             set {
-                this["textImportWlasny"] = value;
+                this["textImportwlasny"] = value;
             }
         }
     }

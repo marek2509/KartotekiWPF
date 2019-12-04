@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,20 +28,29 @@ namespace KartotekiWPF
     public partial class MainWindow : Window
     {
 
-
         public void wczytanieUstawienDomyślnych()
         {
             try
             {
-                radioButtonTabulator.IsChecked = Properties.Settings.Default.boolImportTab;
-                radioButtonSrednik.IsChecked = Properties.Settings.Default.booImportSrednik;
-                radioButtonPrzecinek.IsChecked = Properties.Settings.Default.boolImportPrzecinek;
-                radioButtonWlasny.IsChecked = Properties.Settings.Default.boolImportWlasny;
-                textboxSeparator.Text = Properties.Settings.Default.textImportWlasny;
+                radioButtonTabulator.IsChecked = Properties.Settings.Default.boolExportTab;
+                radioButtonSrednik.IsChecked = Properties.Settings.Default.booIExportsrednik;
+                radioButtonPrzecinek.IsChecked = Properties.Settings.Default.boolExportPrzecinek;
+                radioButtonWlasny.IsChecked = Properties.Settings.Default.boolExportWlasny;
+                textboxSeparator.Text = Properties.Settings.Default.textExportWlasny;
+
+                radioButtonimportDoc.IsChecked = Properties.Settings.Default.boolImportDOC;
+                importTab.IsChecked = Properties.Settings.Default.boolImportTab;
+                importWlasny.IsChecked = Properties.Settings.Default.boolImportDOC;
+                textboxSeparatorImport.Text = Properties.Settings.Default.textImportwlasny;
+
+                if (!((bool)radioButtonimportDoc.IsChecked || (bool)importTab.IsChecked || (bool)importWlasny.IsChecked))
+                {
+                    radioButtonimportDoc.IsChecked = true;
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("bł wczytanie ustawien domyslnych" + e);
+                Console.WriteLine("Błąd wczytania ustawień domyślnych. " + e);
             }
         }
 
@@ -48,16 +58,23 @@ namespace KartotekiWPF
         {
             try
             {
-                Properties.Settings.Default.boolImportTab = (bool)radioButtonTabulator.IsChecked;
-                Properties.Settings.Default.booImportSrednik = (bool)radioButtonSrednik.IsChecked;
-                Properties.Settings.Default.boolImportPrzecinek = (bool)radioButtonPrzecinek.IsChecked;
-                Properties.Settings.Default.boolImportWlasny = (bool)radioButtonWlasny.IsChecked;
-                Properties.Settings.Default.textImportWlasny = textboxSeparator.Text;
+                Properties.Settings.Default.boolExportTab = (bool)radioButtonTabulator.IsChecked;
+                Properties.Settings.Default.booIExportsrednik = (bool)radioButtonSrednik.IsChecked;
+                Properties.Settings.Default.boolExportPrzecinek = (bool)radioButtonPrzecinek.IsChecked;
+                Properties.Settings.Default.boolExportWlasny = (bool)radioButtonWlasny.IsChecked;
+                Properties.Settings.Default.textExportWlasny = textboxSeparator.Text;
+
+                Properties.Settings.Default.boolImportDOC = (bool)radioButtonimportDoc.IsChecked;
+                Properties.Settings.Default.boolImportTab = (bool)importTab.IsChecked;
+                Properties.Settings.Default.boolImportDOC = (bool)importWlasny.IsChecked;
+                Properties.Settings.Default.textImportwlasny = textboxSeparatorImport.Text;
+
+         
                 Properties.Settings.Default.Save();
             }
             catch (Exception e)
             {
-                Console.WriteLine("bł zapisu ustawien domyslnych" + e);
+                Console.WriteLine("Błąd zapisu ustawien domyslnych. " + e);
             }
         }
 
@@ -67,15 +84,27 @@ namespace KartotekiWPF
         List<TabelaGML> listaKartotekGML = new List<TabelaGML>();
         public MainWindow()
         {
-
+           
             InitializeComponent();
+            wczytanieUstawienDomyślnych();
             dgUsers.ItemsSource = wczytaneKartoteki;
             dgUsers.Items.Refresh();
 
             dgUsersGML.ItemsSource = listaKartotekGML;
             dgUsersGML.Items.Refresh();
 
-            wczytanieUstawienDomyślnych();
+
+            try
+            {
+
+                Title = "GML inż. Marek Wojciechowicz    Wersja nr " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            }
+            catch
+            {
+                Console.WriteLine("błąd odczytu versji");
+            }
+
 
         }
 
@@ -91,7 +120,7 @@ namespace KartotekiWPF
         string[] calyOdczzytanyTextLinie = null;
         private void OtworzZPliku(object sender, RoutedEventArgs e)
         {
-
+            zapisUstawienDomyslnych();
             poczatek:
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             if (importTab.IsChecked == true)
@@ -102,7 +131,7 @@ namespace KartotekiWPF
             {
                 dlg.Multiselect = false;
             }
-            else
+            else if(radioButtonimportDoc.IsChecked == true)
             {
                 dlg.Multiselect = true;
             }
@@ -163,12 +192,6 @@ namespace KartotekiWPF
                             progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
                         }
                     }
-
-      
-
-
-
-
                 }
                 catch (Exception esa)
                 {

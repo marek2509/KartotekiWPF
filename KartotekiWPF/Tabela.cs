@@ -215,7 +215,7 @@ namespace KartotekiWPF
             }
             set
             {
-                _miejscowosc = value.Trim();
+                _miejscowosc = value.Trim().ToUpper();
                 //_miejscowosc = _miejscowosc.Replace("   ", "@");
                 //_miejscowosc = _miejscowosc.Replace(" ", "");
                 //_miejscowosc = _miejscowosc.Replace("@", " ");

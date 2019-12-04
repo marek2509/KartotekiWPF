@@ -58,6 +58,10 @@ namespace KartotekiWPF
 
         string wyszukiwanieKodow(string[,] tablicakodow, string szukana)
         {
+            if(szukana==null)
+            {
+                szukana = "";
+            }
 
             for (int i = 0; i < (tablicakodow.Length / tablicakodow.Rank); i++)
             {
