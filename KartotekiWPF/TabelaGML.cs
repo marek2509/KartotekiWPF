@@ -76,6 +76,7 @@ namespace KartotekiWPF
 
         public TabelaGML(Tabela tabela)
         {
+            this.ID = tabela.ID;
             this.IdObr = tabela.IdObr;
             this.IdBud = tabela.IdBud;
             this.NrDz = tabela.NrDz;
@@ -96,6 +97,7 @@ namespace KartotekiWPF
         }
         public TabelaGML(Tabela tabela, int podajDowolnaCyfre)
         {
+            this.ID = tabela.ID;
             this.IdObr = tabela.IdObr;
             this.IdBud = tabela.IdBud;
             this.NrDz = tabela.NrDz;
@@ -121,6 +123,7 @@ namespace KartotekiWPF
         string _gLFNBUD;
         string _uSTDATYBB;
 
+       public new int ID { get; set; }
         public new string IdObr { get; set; }
         public new string IdBud { get; set; }
         public new string NrDz { get; set; }

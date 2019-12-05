@@ -10,6 +10,7 @@ namespace KartotekiWPF
 {
     class Plik
     {
+        
         public static string convertDocToTXT(string path)
         {
             Document document = new Document();

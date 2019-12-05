@@ -96,8 +96,7 @@ namespace KartotekiWPF
 
             dgUsersGML.ItemsSource = listaKartotekGML;
             dgUsersGML.Items.Refresh();
-
-
+ 
             try
             {
 
@@ -157,7 +156,6 @@ namespace KartotekiWPF
                     //Console.WriteLine(filename);
                     //calyOdczzytanyText = Plik.convertDocToTXT(filename);
 
-
                     wczytaneKartoteki.Clear();
                     listaKartotekGML.Clear();
                     calyProgram.IsEnabled = false;
@@ -169,7 +167,6 @@ namespace KartotekiWPF
                         {
                             Console.WriteLine(item);
                             wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, '\t')));
-
                             progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
                         }
                     }
@@ -207,6 +204,11 @@ namespace KartotekiWPF
                     }
                     Console.WriteLine(esa + "goto poczatek catch");
                    */
+                }
+
+                for (int i = 0; i < wczytaneKartoteki.Count; i++)
+                {
+                    wczytaneKartoteki[i].ID = i + 1;
                 }
 
                 dgUsers.Items.Refresh();
@@ -308,7 +310,7 @@ namespace KartotekiWPF
         }
 
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_ClickZamknij(object sender, RoutedEventArgs e)
         {
 
             System.Windows.Application.Current.Shutdown();
@@ -376,6 +378,7 @@ namespace KartotekiWPF
 
         private void kopiujDoTabeliGML(object sender, RoutedEventArgs e)
         {
+            listaKartotekGML.Clear();
             foreach (var item in wczytaneKartoteki)
             {
                 listaKartotekGML.Add(new TabelaGML(item, 0));
@@ -429,6 +432,11 @@ namespace KartotekiWPF
 
 
                         progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+                    }
+
+                    for (int i = 0; i < wczytaneKartoteki.Count; i++)
+                    {
+                        wczytaneKartoteki[i].ID = i + 1;
                     }
                     calyProgram.IsEnabled = true;
                     dgUsers.Items.Refresh();

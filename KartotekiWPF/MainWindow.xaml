@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KartotekiWPF"
         mc:Ignorable="d"
-        Title="GML inż. Marek Wojciechowicz" Height="450" MinWidth="850" Width="880">
+        Title="GML inż. Marek Wojciechowicz" Height="450" MinWidth="500" Width="900">
     <Grid x:Name="calyProgram">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="106*"/>
@@ -31,7 +31,7 @@
 
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="_Zamknij" Click="MenuItem_Click" />
+                <MenuItem Header="_Zamknij" Click="MenuItem_ClickZamknij" />
             </MenuItem>
             <MenuItem Header="_Edycja">
 
@@ -114,7 +114,7 @@
             <TabItem Header="TabelaStandard">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid  ItemsSource="{Binding list}"  IsReadOnly="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeColumns="True" 
-                CanUserResizeRows="False" Visibility="Visible" CanUserSortColumns="False" Margin="1,0,1,1" x:Name="dgUsers" MinWidth="200" MinHeight="25" Panel.ZIndex="-6" VerticalGridLinesBrush="#FF292929" SelectedIndex="0" BorderThickness="2"/>
+                CanUserResizeRows="False" Visibility="Visible" CanUserSortColumns="True" Margin="1,0,1,1" x:Name="dgUsers" MinWidth="200" MinHeight="25" Panel.ZIndex="-6" VerticalGridLinesBrush="#FF292929" SelectedIndex="0" BorderThickness="2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="TabelaGML">
