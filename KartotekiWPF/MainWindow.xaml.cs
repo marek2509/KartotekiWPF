@@ -27,7 +27,6 @@ namespace KartotekiWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public void wczytanieUstawienDomyślnych()
         {
             try
@@ -404,17 +403,29 @@ namespace KartotekiWPF
 
                 try
                 {
+                   
                     wczytaneKartoteki.Clear();
                     listaKartotekGML.Clear();
                     calyProgram.IsEnabled = false;
 
                     calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
-
+                    progresBar.Maximum = calyOdczzytanyTextLinie.Length;
                     foreach (var item in calyOdczzytanyTextLinie)
                     {
                         // Console.WriteLine(item);
 
-                        wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, '-')[0], Plik.pobranieWartoscZTXT(item, '-')[1]));
+                        string[] odczytaneDzialki = Plik.pobranieWartoscZTXT(item, '-');
+
+                       // wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, '-')[0], Plik.pobranieWartoscZTXT(item, '-')[1]));
+                       if(odczytaneDzialki.Length>1)
+                        {
+                            wczytaneKartoteki.Add(new Tabela(odczytaneDzialki[0], odczytaneDzialki[1]));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Błędny format");
+                        }
+                      
 
 
                         progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
@@ -422,6 +433,7 @@ namespace KartotekiWPF
                     calyProgram.IsEnabled = true;
                     dgUsers.Items.Refresh();
                     dgUsersGML.Items.Refresh();
+                    progresBar.Value = 0;
                 }
                 catch (Exception esa)
                 {
@@ -545,7 +557,51 @@ namespace KartotekiWPF
 
         private void MenuItemDzialkiDlaBudynku_Click(object sender, RoutedEventArgs e)
         {
+            zapisUstawienDomyslnych();
+            SaveFileDialog svd = new SaveFileDialog();
+            svd.DefaultExt = ".txt";
+            svd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (svd.ShowDialog() == true)
+            {
 
+                using (Stream s = File.Open(svd.FileName, FileMode.Create))
+                //  using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                {
+
+                    //try
+                    //{
+                        try
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            string separ = "";
+
+                            foreach (var item in listaKartotekGML)
+                            {
+                                sb.AppendLine(item.IdObr + "\t" + item.IdBud);
+                                sb.AppendLine("**");
+                                sb.AppendLine(item.IdObr + "-" + item.NrDz);
+                                sb.AppendLine("****");
+                            }
+                            sw.Write(sb.ToString());
+                            sw.Close();
+                        }
+                        catch (Exception exc)
+                        {
+                            MessageBox.Show(exc.ToString() + "  problem z plikiem");
+                        }
+              //      }
+              //      catch (Exception ex)
+              //      {
+              //          var resultat = MessageBox.Show(ex.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+              //          if (resultat == MessageBoxResult.Yes)
+              //          {
+              //              Application.Current.Shutdown();
+              //          }
+              //      }
+                }
+            }
         }
     }
 }

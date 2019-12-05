@@ -5,23 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KartotekiWPF"
         mc:Ignorable="d"
-        Title="GML inż. Marek Wojciechowicz" Height="450" Width="880">
+        Title="GML inż. Marek Wojciechowicz" Height="450" MinWidth="850" Width="880">
     <Grid x:Name="calyProgram">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="106*"/>
+            <ColumnDefinition Width="767*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
 
-        <Menu DockPanel.Dock="Top" Grid.Row="0" >
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" >
             <MenuItem Header="_Plik">
-                <MenuItem Header="_Otwórz [BUDYNKI]" Click="OtworzZPliku" ToolTip="[IDOBR]	[IDB]	[NRDZ]	[MIEJSC]	[NRADR]	[STATBUD]	[FUZ]	[RODZKST]	[KLASAPKOB]	[GLFNBUD]	[RBB]	[USTDATYBB]	[PEW]	[LKON]	[LKONP]	[SCN]	[WIATA]"/>
+                <MenuItem Header="_Otwórz [BUDYNKI]"  Click="OtworzZPliku" ToolTip="[IDOBR]	[IDB]	[NRDZ]	[MIEJSC]	[NRADR]	[STATBUD]	[FUZ]	[RODZKST]	[KLASAPKOB]	[GLFNBUD]	[RBB]	[USTDATYBB]	[PEW]	[LKON]	[LKONP]	[SCN]	[WIATA]"/>
                 <MenuItem Header="_Otwórz [DZIALKI]"  ToolTip="Format importu 1-105" Click="otworzDzialki"  />
                 <MenuItem Header="_Zapisz">
 
                     <MenuItem Header="TabelaGML" Click="ZapiszDoPliku" />
                     <MenuItem Header="TabelaStandard" Click="ZapiszDoPliku" />
-                    
+
 
 
 
@@ -30,25 +34,25 @@
                 <MenuItem Header="_Zamknij" Click="MenuItem_Click" />
             </MenuItem>
             <MenuItem Header="_Edycja">
-                
+
                 <MenuItem Header="_Przekodowanie na GML" Click="GenerujGML" />
                 <MenuItem Header="_Kopiuj do tabeli GML" Click="kopiujDoTabeliGML" />
             </MenuItem>
             <MenuItem Header="Opcje">
-                
+
                 <MenuItem Header="opcje importu danych">
                     <Label>Format importu [BUDYNKI]</Label>
                     <Separator></Separator>
                     <RadioButton x:Name="radioButtonimportDoc" GroupName="imp">import Arkuszy.doc</RadioButton>
-                    
+
                     <RadioButton HorizontalAlignment="Center" GroupName="imp" x:Name="importTab">
-                        
+
                         <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock> import .txt rozdzielony tabulatorem</TextBlock>
                             <TextBlock Margin="10,0,0,0" x:Name="infoImportTxt"  Background="Azure" HorizontalAlignment="Center" ToolTip="[IDOBR]	[IDB]	[NRDZ]	[MIEJSC]	[NRADR]	[STATBUD]	[FUZ]	[RODZKST]	[KLASAPKOB]	[GLFNBUD]	[RBB]	[USTDATYBB]	[PEW]	[LKON]	[LKONP]	[SCN]	[WIATA]"> [info]</TextBlock>
                         </WrapPanel>
                     </RadioButton>
-                    
+
                     <RadioButton x:Name="importWlasny" GroupName="imp" VerticalContentAlignment="Center">
                         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
@@ -56,21 +60,22 @@
                             <TextBox x:Name="textboxSeparatorImport" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="50" Text=""></TextBox>
                         </WrapPanel>
                     </RadioButton>
-                    
+
                 </MenuItem>
-                
+
                 <MenuItem Header="opcje zapisu tabeli">
                     <Label>Separator</Label>
                     <Separator></Separator>
-                    
+
                     <RadioButton x:Name="radioButtonTabulator" GroupName="export">Tabulator</RadioButton>
 
                     <RadioButton x:Name="radioButtonPrzecinek" GroupName="export">, przecinek</RadioButton>
-                    
+
                     <RadioButton x:Name="radioButtonSrednik" GroupName="export">; średnik</RadioButton>
                     <RadioButton x:Name="radioButtonWlasny" VerticalContentAlignment="Center" GroupName="export" >
-                        <WrapPanel> <Label>Własny:</Label>
-                        <TextBox x:Name="textboxSeparator" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="50" Text=""></TextBox>
+                        <WrapPanel>
+                            <Label>Własny:</Label>
+                            <TextBox x:Name="textboxSeparator" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="50" Text=""></TextBox>
                         </WrapPanel>
                     </RadioButton>
                 </MenuItem>
@@ -79,8 +84,8 @@
                 <WrapPanel>
                     <TextBlock>Kod pocztowy:</TextBlock>
                     <TextBox x:Name="textboxKodPocztowy" Margin="5,0" TextAlignment="Center" Width="50">17-322</TextBox>
-                  
-                </WrapPanel> 
+
+                </WrapPanel>
                 <WrapPanel>
                     <TextBlock>Nazwa miejscowości gdy brak w tabeli:</TextBlock>
                     <TextBox x:Name="textBoxMiejscowoscGdyBrakWTabeli" Margin="5,0" TextAlignment="Center" Width="200">BORZYMY</TextBox>
@@ -98,14 +103,14 @@
 
 
             </MenuItem>
-            <ProgressBar  Width="700" x:Name="progresBar" Value="0"/>
+            <ProgressBar  Width="600" x:Name="progresBar" Value="0"/>
 
 
 
 
         </Menu>
 
-        <TabControl Grid.Row="1" Height="AUTO" Width="AUTO">
+        <TabControl Grid.Row="1" Height="AUTO" Width="AUTO" Grid.ColumnSpan="2">
             <TabItem Header="TabelaStandard">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid  ItemsSource="{Binding list}"  IsReadOnly="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeColumns="True" 
