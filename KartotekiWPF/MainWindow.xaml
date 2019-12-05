@@ -94,10 +94,10 @@
                 <Separator></Separator>
                 <MenuItem x:Name="menuItemBudynki" Header="Nowe budynki" Click="MenuItemBudynki_Click" ToolTip="IDOBR,IDB,NRDZ,STATBUD,FUZ,RODZKST,KLASAPKOB,GLFNBUD,RBB,USTDATYBB,PEW,LKON,LKONP,SCN"/>
                 <MenuItem x:Name="menuItemAdresyDlaBudynków" Header="Adresy dla budynków" Click="MenuItemAdresyDlaBudynków_Click" ToolTip="[IdObr]		[NrBud]&#x0a;**&#x0a;[OBRĘB],,[NrAdr],[KodPocztowy]&#x0a;****"/>
-                <MenuItem x:Name="menuItemAdresyDlaDzialek" Header="Adresy dla działek" Click="MenuItemAdresyDlaDzialek_Click" ToolTip="[IdObr]		[NrDz]&#x0a;**&#x0a;[OBRĘB],,,[kodPocztowy]&#x0a;****"/>
+               
                 <MenuItem x:Name="menuItemDzialkiDlaBudynku" Header="Działki dla budynku"  ToolTip="[IdObr]		[NrBud]&#x0a;**&#x0a;[IdObr]-[NrDz]&#x0a;****" Click="MenuItemDzialkiDlaBudynku_Click"/>
-
-
+                <Separator/>
+                <MenuItem x:Name="menuItemAdresyDlaDzialek" Header="Adresy dla działek" Click="MenuItemAdresyDlaDzialek_Click" ToolTip="[IdObr]		[NrDz]&#x0a;**&#x0a;[OBRĘB],,,[kodPocztowy]&#x0a;****"/>
 
 
 
