@@ -208,7 +208,7 @@ namespace KartotekiWPF
 
                 for (int i = 0; i < wczytaneKartoteki.Count; i++)
                 {
-                    wczytaneKartoteki[i].ID = i + 1;
+                    wczytaneKartoteki[i].ustawID( i + 1);
                 }
 
                 dgUsers.Items.Refresh();
@@ -436,7 +436,7 @@ namespace KartotekiWPF
 
                     for (int i = 0; i < wczytaneKartoteki.Count; i++)
                     {
-                        wczytaneKartoteki[i].ID = i + 1;
+                        wczytaneKartoteki[i].ustawID( i + 1);
                     }
                     calyProgram.IsEnabled = true;
                     dgUsers.Items.Refresh();

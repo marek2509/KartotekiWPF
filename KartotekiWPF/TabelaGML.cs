@@ -123,7 +123,7 @@ namespace KartotekiWPF
         string _gLFNBUD;
         string _uSTDATYBB;
 
-       public new int ID { get; set; }
+       public new int ID { get; private set; }
         public new string IdObr { get; set; }
         public new string IdBud { get; set; }
         public new string NrDz { get; set; }

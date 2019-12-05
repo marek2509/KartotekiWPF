@@ -103,8 +103,12 @@ namespace KartotekiWPF
         string _sCN;
         string _wIATA;
 
-        public int ID { get; set; }
-        
+        public int ID { get; private set; }
+        public void ustawID(int id)
+        {
+            ID = id;
+        }
+
         public string IdObr
         {
             get
