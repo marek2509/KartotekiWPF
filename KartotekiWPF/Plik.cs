@@ -35,12 +35,20 @@ namespace KartotekiWPF
             {
                 document.LoadFromFile(path);
 
-
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc);
+             
+                var resultat = MessageBox.Show("Błąd otwarcia pliku: " + path + "Wyłączyć program?", "ERROR", MessageBoxButton.YesNo);
+
+                if (resultat == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+                }
+
+
             }
+
             char[] charSeparators = new char[] { '\n' };
             string[] linie = document.GetText().Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
             return linie;

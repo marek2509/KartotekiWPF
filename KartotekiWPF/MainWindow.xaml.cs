@@ -188,10 +188,12 @@ namespace KartotekiWPF
                     {
                         foreach (var item in dlg.FileNames)
                         {
+
                             calyOdczzytanyTextLinie = Plik.convertDocToTXTLine(item);
 
                             wczytaneKartoteki.Add(Plik.pobranieWartosciDoGMLZLinii(calyOdczzytanyTextLinie));
                             progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+
                         }
                     }
                     calyProgram.IsEnabled = true;
@@ -271,7 +273,7 @@ namespace KartotekiWPF
                 }
                 foreach (var qew in dublikatyWypisane)
                 {
-                    textBlockBledy.Text += "Id budynku: " + qew.IdObr + "-" + qew.IdBud + "\t" + "działka nr: " + qew.NrDz + "\t" + "GLFUN: "+ qew.GLFNBUD + "\t" + "Pow.:" + qew.PEW + "\n";
+                    textBlockBledy.Text += "Id w tabeli:" + qew.ID +" Id budynku: " + qew.IdObr + "-" + qew.IdBud + "\t" + "działka nr: " + qew.NrDz + "\t" + "GLFUN: "+ qew.GLFNBUD + "\t" + "Pow.:" + qew.PEW + "\n";
                 }
 
 
@@ -390,6 +392,7 @@ namespace KartotekiWPF
 
         private void GenerujGML(object sender, RoutedEventArgs e)
         {
+            listaKartotekGML.Clear();
             foreach (var item in wczytaneKartoteki)
             {
                 listaKartotekGML.Add(new TabelaGML(item));
