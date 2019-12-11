@@ -160,6 +160,7 @@ namespace KartotekiWPF
                     wczytaneKartoteki.Clear();
                     listaKartotekGML.Clear();
                     calyProgram.IsEnabled = false;
+
                     if (importTab.IsChecked == true)
                     {
                         calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
@@ -293,6 +294,7 @@ namespace KartotekiWPF
                     textBlockBledy.Text += "Dla budynku " + item.IdObr+"-" +item.IdBud+ " liczba kondygnacji jest niepoprawna " + item.LKON + "\n";
                 }
                 }
+                calyProgram.IsEnabled = true;
             }
         }
 
