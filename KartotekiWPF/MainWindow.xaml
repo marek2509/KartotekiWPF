@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KartotekiWPF"
         mc:Ignorable="d"
-        Title="GML inż. Marek Wojciechowicz" Height="450" MinWidth="500" Width="900">
+        Title="GML inż. Marek Wojciechowicz" Height="450" MinWidth="850" Width="900">
     <Grid x:Name="calyProgram">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="106*"/>
@@ -37,6 +37,7 @@
 
                 <MenuItem Header="_Przekodowanie na GML" Click="GenerujGML" />
                 <MenuItem Header="_Kopiuj do tabeli GML" Click="kopiujDoTabeliGML" />
+                <MenuItem Header="_Wyczyść tabele" Click="MenuItemWyczyśćTabele_Click" />
             </MenuItem>
             <MenuItem Header="Opcje">
 
@@ -123,6 +124,10 @@
                 CanUserResizeRows="False" Visibility="Visible" CanUserSortColumns="True" Margin="1,0,1,1" x:Name="dgUsersGML" MinWidth="200" MinHeight="25" Panel.ZIndex="-6" VerticalGridLinesBrush="#FF292929" SelectedIndex="0" BorderThickness="2" Grid.ColumnSpan="3"/>
 
                 </Grid>
+            </TabItem>
+            
+            <TabItem Header="Znaleziono błędy!" Visibility="Hidden" Foreground="Red" x:Name="logBledow" Margin="613,0,-617,0">
+                <TextBox x:Name="textBlockBledy" ></TextBox>
             </TabItem>
         </TabControl>
 

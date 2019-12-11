@@ -95,6 +95,7 @@ namespace KartotekiWPF
             this.SCN = tabela.SCN;
             this.WIATA = tabela.WIATA;
         }
+
         public TabelaGML(Tabela tabela, int podajDowolnaCyfre)
         {
             this.ID = tabela.ID;

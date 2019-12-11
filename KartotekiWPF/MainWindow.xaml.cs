@@ -91,6 +91,7 @@ namespace KartotekiWPF
 
             InitializeComponent();
             wczytanieUstawienDomyślnych();
+
             dgUsers.ItemsSource = wczytaneKartoteki;
             dgUsers.Items.Refresh();
 
@@ -224,6 +225,74 @@ namespace KartotekiWPF
 
                 // Plik.pobranieWartosciDoGML(calyOdczzytanyText);
 
+
+
+                List<Tabela> dublikatyWypisane = new List<Tabela>();
+                foreach (var item in wczytaneKartoteki)
+                {
+                  
+                    var znalezioneDuplikaty = wczytaneKartoteki.Select(test => test).Where(test => test.IdBud == item.IdBud).Where(test => test.IdObr == item.IdObr).ToList();
+                    if (znalezioneDuplikaty.Count >1)
+                    {
+                     
+
+                        if (dublikatyWypisane.Count < 1)
+                        {
+                            foreach (var elem in znalezioneDuplikaty)
+                            {
+                                dublikatyWypisane.Add(elem);
+                            }
+                        }
+                        else
+                        {
+
+                                var czyPowtorzony = dublikatyWypisane.Select(test => test).Where(test => test.IdBud == znalezioneDuplikaty[0].IdBud).ToList();
+                                if(czyPowtorzony.Count < 1)
+                                {
+
+                                foreach (var el1 in znalezioneDuplikaty)
+                                {
+                                    dublikatyWypisane.Add(el1);
+                                }
+                                              
+                                    
+                                }
+                         
+                        }
+                    }
+                }
+
+                if (dublikatyWypisane.Count > 0)
+                {
+                   // logBledow.IsEnabled = true;
+                    logBledow.Visibility = Visibility.Visible;
+                    textBlockBledy.Text += "Zdublowane nr BUDYNKÓW!!!\n";
+                }
+                foreach (var qew in dublikatyWypisane)
+                {
+                    textBlockBledy.Text += "Id budynku: " + qew.IdObr + "-" + qew.IdBud + "\t" + "działka nr: " + qew.NrDz + "\t" + "GLFUN: "+ qew.GLFNBUD + "\t" + "Pow.:" + qew.PEW + "\n";
+                }
+
+
+                //LKON z przecinkiem
+                var kondygnacjeZPrzecinkami = wczytaneKartoteki.Select(test => test).Where(test => test.LKON.Contains(",")).ToList();
+                var kondygnacjeZKropkami = wczytaneKartoteki.Select(test => test).Where(test => test.LKON.Contains(".")).ToList();
+                if (kondygnacjeZPrzecinkami.Count > 0 || kondygnacjeZPrzecinkami.Count > 0)
+                {
+                    logBledow.Visibility = Visibility.Visible;
+                    textBlockBledy.Text += "\n";
+                    foreach (var item in kondygnacjeZPrzecinkami)
+                    {
+                        textBlockBledy.Text += "Dla budynku " + item.IdObr + "-" + item.IdBud + " liczba kondygnacji jest niepoprawna " + item.LKON + "\n";
+                    }
+               
+                //lokon z Kropka
+               
+                foreach (var item in kondygnacjeZKropkami)
+                {
+                    textBlockBledy.Text += "Dla budynku " + item.IdObr+"-" +item.IdBud+ " liczba kondygnacji jest niepoprawna " + item.LKON + "\n";
+                }
+                }
             }
         }
 
@@ -385,6 +454,11 @@ namespace KartotekiWPF
             }
 
             dgUsersGML.Items.Refresh();
+
+
+
+
+
         }
 
         private void otworzDzialki(object sender, RoutedEventArgs e)
@@ -457,6 +531,11 @@ namespace KartotekiWPF
                     goto poczatek;
                 }
             }
+
+            // sprawdzenie duplikatów ID BUD
+
+
+
         }
 
         private void MenuItemAdresyDlaDzialek_Click(object sender, RoutedEventArgs e)
@@ -610,6 +689,17 @@ namespace KartotekiWPF
               //      }
                 }
             }
+        }
+
+        private void MenuItemWyczyśćTabele_Click(object sender, RoutedEventArgs e)
+        {
+            wczytaneKartoteki.Clear();
+            listaKartotekGML.Clear();
+          
+            dgUsers.Items.Refresh();
+            dgUsersGML.Items.Refresh();
+
+
         }
     }
 }
