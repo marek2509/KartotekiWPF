@@ -105,7 +105,7 @@
 
 
             </MenuItem>
-            <ProgressBar  Width="600" x:Name="progresBar" Value="0"/>
+            <ProgressBar  Width="600"  Height="5" x:Name="progresBar" Value="0"/>
 
 
 
