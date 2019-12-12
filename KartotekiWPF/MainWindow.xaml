@@ -35,9 +35,10 @@
             </MenuItem>
             <MenuItem Header="_Edycja">
 
-                <MenuItem Header="_Przekodowanie na GML" Click="GenerujGML" />
-                <MenuItem Header="_Kopiuj do tabeli GML" Click="kopiujDoTabeliGML" />
-                <MenuItem Header="_Wyczyść tabele" Click="MenuItemWyczyśćTabele_Click" />
+                <MenuItem Header="Przekodowanie na GML" Click="GenerujGML" />
+                <MenuItem Header="Kopiuj do tabeli GML" Click="kopiujDoTabeliGML" />
+                <MenuItem Header="Wyczyść tabele" Click="MenuItemWyczyśćTabele_Click" />
+                <MenuItem Header="Kontrola danych" Click="KontrolaDanych_Click"  />
             </MenuItem>
             <MenuItem Header="Opcje">
 
@@ -125,8 +126,8 @@
 
                 </Grid>
             </TabItem>
-            
-            <TabItem Header="Znaleziono błędy!" Visibility="Hidden" Foreground="Red" x:Name="logBledow" Margin="613,0,-617,0">
+
+            <TabItem Header="Znaleziono błędy!" Visibility="Hidden"  Foreground="Red" x:Name="logBledow" Margin="613,0,-617,0">
                 <TextBox x:Name="textBlockBledy" ></TextBox>
             </TabItem>
         </TabControl>
