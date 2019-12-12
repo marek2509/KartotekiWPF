@@ -240,7 +240,7 @@ namespace KartotekiWPF
             zapisUstawienDomyslnych();
             SaveFileDialog svd = new SaveFileDialog();
             svd.DefaultExt = "";
-            svd.Filter = "All files (*.*)|*.*|Text files (*.txt)|*.txt|HTML (*.html)|*.html|doc (*.doc)|*.doc";
+            svd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*|HTML (*.html)|*.html|doc (*.doc)|*.doc";
             if (svd.ShowDialog() == true)
             {
 
