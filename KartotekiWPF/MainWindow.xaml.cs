@@ -759,6 +759,21 @@ namespace KartotekiWPF
                     textBlockBledy.Text += "Dla budynku " + item.IdObr + "-" + item.IdBud + " liczba kondygnacji jest niepoprawna " + item.LKON + "\n";
                 }
             }
+
+            foreach (var item in wczytaneKartoteki)
+            {
+                if(item.PEW.Equals("") || item.PEW.Equals(" ") || item.PEW.Equals("0"))
+                {
+                    textBlockBledy.Text += "Błędna powierzchnia budynku: \"" + item.PEW + "\" ID bud: " + item.IdBud + "\n";
+                }
+            }
+
+            foreach (var item in wczytaneKartoteki)
+            {
+                if(item.RBB.Equals(""))
+                textBlockBledy.Text += "Błedny rok budowy dla bydunku: " + item.IdBud + "\n";
+            }
+
         }
     }
 }

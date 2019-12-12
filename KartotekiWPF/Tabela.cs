@@ -395,8 +395,34 @@ namespace KartotekiWPF
             set
             {
                 _rBB = value.Trim();
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < _rBB.Length; i++)
+                {
+
+
+                    foreach (var item in charcyfry)
+                    {
+                        if (_rBB[i].Equals(item))
+                        {
+                            sb.Append(item);
+                        }
+                    }
+                }
+               
+                if(sb ==  null)
+                {
+                    _rBB = "";
+                }
+                else
+                {
+                    _rBB = sb.ToString();
+                }
+
+                sb.Clear();
             }
         }
+
         public string USTDATYBB
         {
             get
