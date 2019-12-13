@@ -202,7 +202,7 @@ namespace KartotekiWPF
             {
 
 
-                all = System.IO.File.ReadAllLines(a);
+                all = System.IO.File.ReadAllLines(a,Encoding.Default);
 
             }
             catch (Exception e)

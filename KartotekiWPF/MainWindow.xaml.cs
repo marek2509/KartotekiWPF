@@ -169,6 +169,7 @@ namespace KartotekiWPF
                         {
                             Console.WriteLine(item);
                             wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, '\t')));
+
                             progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
                         }
                     }
