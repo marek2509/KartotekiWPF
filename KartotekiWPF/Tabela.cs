@@ -506,7 +506,7 @@ namespace KartotekiWPF
                 }
                 else
                 {
-                    _wIATA = "0";
+                    _wIATA = "2";
                 }
             }
         }

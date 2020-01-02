@@ -550,12 +550,12 @@ namespace KartotekiWPF
                         try
                         {
                             StringBuilder sb = new StringBuilder();
-                            sb.AppendLine("IDOBR,IDB,NRDZ,STATBUD,FUZ,RODZKST,KLASAPKOB,GLFNBUD,RBB,USTDATYBB,PEW,LKON,LKONP,SCN,WIATA");
+                            sb.AppendLine("IDOBR,IDB,NRDZ,STATBUD,FUZ,RODZKST,KLASAPKOB,GLFNBUD,RBB,USTDATYBB,PEW,LKON,LKONP,SCN");
                             foreach (var item in listaKartotekGML)
                             {
                                     sb.AppendLine(item.IdObr + ",\"" + item.IdBud + "\",\"" + item.NrDz + "\"," + item.StatusBud + "," + item.FUZ + "," + item.RodzKST 
                                         + "," + item.KLASAPKOB + "," + item.GLFNBUD + "," + item.RBB + "," + item.USTDATYBB + "," + item.PEW + "," + item.LKON 
-                                        + "," + item.LKONP + "," + item.SCN + "," + item.WIATA);
+                                        + "," + item.LKONP + "," + item.SCN);
                             }
 
 
