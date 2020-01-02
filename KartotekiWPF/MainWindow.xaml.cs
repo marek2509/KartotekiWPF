@@ -1,24 +1,12 @@
 ﻿using Microsoft.Win32;
-using Spire.Doc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace KartotekiWPF
 {
@@ -550,12 +538,12 @@ namespace KartotekiWPF
                         try
                         {
                             StringBuilder sb = new StringBuilder();
-                            sb.AppendLine("IDOBR,IDB,NRDZ,STATBUD,FUZ,RODZKST,KLASAPKOB,GLFNBUD,RBB,USTDATYBB,PEW,LKON,LKONP,SCN");
+                            sb.AppendLine("IDOBR,IDB,NRDZ,STATBUD,FUZ,RODZKST,KLASAPKOB,GLFNBUD,RBB,USTDATYBB,PEW,LKON,LKONP,SCN,WIATA");
                             foreach (var item in listaKartotekGML)
                             {
                                     sb.AppendLine(item.IdObr + ",\"" + item.IdBud + "\",\"" + item.NrDz + "\"," + item.StatusBud + "," + item.FUZ + "," + item.RodzKST 
                                         + "," + item.KLASAPKOB + "," + item.GLFNBUD + "," + item.RBB + "," + item.USTDATYBB + "," + item.PEW + "," + item.LKON 
-                                        + "," + item.LKONP + "," + item.SCN);
+                                        + "," + item.LKONP + "," + item.SCN + "," + item.WIATA);
                             }
 
 
@@ -744,16 +732,15 @@ namespace KartotekiWPF
 
             if (kondygnacjeZPrzecinkami.Count > 0 || kondygnacjeZKropkami.Count > 0)
             {
-                Console.WriteLine("kondygn ");
                 logBledow.Visibility = Visibility.Visible;
-                textBlockBledy.Text += "\n";
+               // textBlockBledy.Text += "\n";
 
                 foreach (var item in kondygnacjeZPrzecinkami)
                 {
                     textBlockBledy.Text += "Dla budynku " + item.IdObr + "-" + item.IdBud + " liczba kondygnacji jest niepoprawna " + item.LKON + "\n";
                 }
 
-                //lokon z Kropka
+                //lkon z Kropka
 
                 foreach (var item in kondygnacjeZKropkami)
                 {

@@ -500,13 +500,13 @@ namespace KartotekiWPF
             set
             {
                 _wIATA = value.Trim();
-                if (_wIATA.ToLower().Equals("tak"))
+                if (_wIATA.ToLower().Equals("tak") || _wIATA.ToLower().Equals("1"))
                 {
                     _wIATA = "1";
                 }
                 else
                 {
-                    _wIATA = "2";
+                    _wIATA = "0";
                 }
             }
         }
