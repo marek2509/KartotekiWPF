@@ -65,6 +65,16 @@ namespace KartotekiWPF
             return wartosciZlini;
         }
 
+        public static string[] pobranieWartoscKW(string LiniaTekstu)
+        {
+
+
+            char[] charSeparators = new char[] { '\t', ',' };
+            string[] wartosciZlini = LiniaTekstu.Trim().Split(charSeparators);
+
+            return wartosciZlini;
+        }
+
         public static string[] pobranieWartoscZTXT(string LiniaTekstu, string separator, StringSplitOptions a = StringSplitOptions.None)
         {
 
@@ -199,11 +209,8 @@ namespace KartotekiWPF
             string[] all = null;
             //string[] lines = null;
             try
-            {
-
-
-                all = System.IO.File.ReadAllLines(a,Encoding.Default);
-
+           {
+                    all = System.IO.File.ReadAllLines(a, Encoding.Default);
             }
             catch (Exception e)
             {

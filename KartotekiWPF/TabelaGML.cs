@@ -94,6 +94,7 @@ namespace KartotekiWPF
             this.LKONP = tabela.LKONP;
             this.SCN = tabela.SCN;
             this.WIATA = tabela.WIATA;
+            this.KW = tabela.KW;
         }
 
         public TabelaGML(Tabela tabela, int podajDowolnaCyfre)
@@ -116,6 +117,7 @@ namespace KartotekiWPF
             this.LKONP = tabela.LKONP;
             this.SCN = tabela.SCN;
             this.WIATA = tabela.WIATA;
+            this.KW = tabela.KW;
         }
 
         string _statusBud;
@@ -231,7 +233,7 @@ namespace KartotekiWPF
         public new string LKONP { get; set; }
         public new string SCN { get; set; }
         public new string WIATA { get; set; }
-
+        public new string KW { get; set; }
         public new string wypiszPoziomoZSeparotorem(string separator)
         {
             return IdObr + separator + IdBud + separator + NrDz + separator + Miejscowosc + separator + nrAdr + separator +

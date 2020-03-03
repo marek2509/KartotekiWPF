@@ -34,7 +34,28 @@ namespace KartotekiWPF
             _sCN = "";
             _wIATA = "";
         }
-
+        
+        public Tabela(string idObr, string nrDz, string KW) 
+        {
+            _idObr = idObr;
+            _idBud = "";
+            _nrDz = nrDz;
+            _miejscowosc = "";
+            _nrAdr = "";
+            _statusBud = "";
+            _fUZ = "";
+            _rodzKST = "";
+            _kLASAPKOB = "";
+            _gLFNBUD = "";
+            _rBB = "";
+            _uSTDATYBB = "";
+            _pEW = "";
+            _lKON = "";
+            _lKONP = "";
+            _sCN = "";
+            _wIATA = "";
+            _kw = KW;
+        }
 
         public Tabela(string[] liniaZTxt)
         {
@@ -102,6 +123,11 @@ namespace KartotekiWPF
         string _lKONP;
         string _sCN;
         string _wIATA;
+        string _kw;
+
+
+
+
 
         public int ID { get; private set; }
         public void ustawID(int id)
@@ -238,6 +264,19 @@ namespace KartotekiWPF
                   _nrDz = _nrDz.Remove((_nrDz.Length - 1));*/
             }
 
+        }
+
+        public string KW
+        {
+            get
+            {
+                return _kw;
+            }
+            set
+            {
+                _kw = "";
+                _kw = value.Trim();
+            }
         }
 
         public string Miejscowosc

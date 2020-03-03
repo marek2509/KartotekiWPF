@@ -763,5 +763,150 @@ namespace KartotekiWPF
             }
 
         }
+
+        private void otworzKW(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            poczatek:
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".txt";
+
+            dlg.Filter = "All files(*.*) | *.*|TXT Files (*.txt)|*.txt| CSV(*.csv)|*.csv";
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+            // Get the selected file name 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+
+
+                try
+                {
+
+                    wczytaneKartoteki.Clear();
+                    listaKartotekGML.Clear();
+                    calyProgram.IsEnabled = false;
+                    int licznikLini = 0;
+                    calyOdczzytanyTextLinie = Plik.odczytZPlikuLinie(dlg.FileName);
+                    progresBar.Maximum = calyOdczzytanyTextLinie.Length;
+                    foreach (var item in calyOdczzytanyTextLinie)
+                    {
+                        // Console.WriteLine(item);
+                        licznikLini++;
+                        string[] odczytanaDzialkaIKw = Plik.pobranieWartoscKW(item);
+
+                        try
+                        {
+                            sb.Append(BadanieKsiagWieczystych.SprawdzCyfreKontrolna(odczytanaDzialkaIKw[1].Trim()));
+                        }
+                        catch (Exception re)
+                        {
+                            var resultat = MessageBox.Show(re.ToString()+ "Problem z txt linia: "+ licznikLini + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                            if (resultat == MessageBoxResult.Yes)
+                            {
+                                Application.Current.Shutdown();
+                            }
+                        }
+                      
+
+                        // wczytaneKartoteki.Add(new Tabela(Plik.pobranieWartoscZTXT(item, '-')[0], Plik.pobranieWartoscZTXT(item, '-')[1]));
+                        if (odczytanaDzialkaIKw.Length > 1)
+                        {
+                            for (int i = 2; i < odczytanaDzialkaIKw.Length; i++)
+                            {
+                                if (odczytanaDzialkaIKw[i].Trim() == "") continue;
+                                wczytaneKartoteki.Add(new Tabela(odczytanaDzialkaIKw[0].Trim(), odczytanaDzialkaIKw[i].Trim(), odczytanaDzialkaIKw[1].Trim()));
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Błędny format");
+                        }
+                        progresBar.Dispatcher.Invoke(new ProgressBarDelegate(UpdateProgress), DispatcherPriority.Background);
+                    }
+
+                    for (int i = 0; i < wczytaneKartoteki.Count; i++)
+                    {
+                        wczytaneKartoteki[i].ustawID(i + 1);
+                    }
+
+                  
+                   
+                    textBlockBledy.Text += sb.ToString();
+                    if (!(textBlockBledy.Text =="" || textBlockBledy.Text == null))
+                    {
+                        logBledow.Visibility = Visibility.Visible;
+                    }
+                        sb.Clear();
+                    calyProgram.IsEnabled = true;
+                    dgUsers.Items.Refresh();
+                    dgUsersGML.Items.Refresh();
+                    progresBar.Value = 0;
+                }
+                catch (Exception esa)
+                {
+
+                    var resultat = MessageBox.Show(esa.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                    if (resultat == MessageBoxResult.Yes)
+                    {
+                        Application.Current.Shutdown();
+                    }
+
+                    Console.WriteLine(esa + "Błędny format importu działek");
+                    goto poczatek;
+                }
+            }
+        }
+
+        private void MenuItemKWDlaDzialek_Click(object sender, RoutedEventArgs e)
+        {
+            zapisUstawienDomyslnych();
+            SaveFileDialog svd = new SaveFileDialog();
+            svd.DefaultExt = ".txt";
+            svd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (svd.ShowDialog() == true)
+            {
+
+                using (Stream s = File.Open(svd.FileName, FileMode.Create))
+                //  using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                using (StreamWriter sw = new StreamWriter(s, Encoding.Default))
+                {
+
+                    //try
+                    //{
+                    try
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendLine("IDOBR,IDD,SYG,KDK");
+
+                        foreach (var item in listaKartotekGML)
+                        {
+                            sb.AppendLine(item.IdObr + ",\"" + item.NrDz + "\",\"" + item.KW + "\",5");
+                          
+                        }
+                        sw.Write(sb.ToString());
+                        sw.Close();
+                    }
+                    catch (Exception exc)
+                    {
+                        MessageBox.Show(exc.ToString() + "  problem z plikiem");
+                    }
+                    //      }
+                    //      catch (Exception ex)
+                    //      {
+                    //          var resultat = MessageBox.Show(ex.ToString() + " Przerwać?", "ERROR", MessageBoxButton.YesNo);
+
+                    //          if (resultat == MessageBoxResult.Yes)
+                    //          {
+                    //              Application.Current.Shutdown();
+                    //          }
+                    //      }
+                }
+            }
+        }
     }
 }

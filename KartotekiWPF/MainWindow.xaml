@@ -21,6 +21,7 @@
             <MenuItem Header="_Plik">
                 <MenuItem Header="_Otwórz [BUDYNKI]"  Click="OtworzZPliku" ToolTip="[IDOBR]	[IDB]	[NRDZ]	[MIEJSC]	[NRADR]	[STATBUD]	[FUZ]	[RODZKST]	[KLASAPKOB]	[GLFNBUD]	[RBB]	[USTDATYBB]	[PEW]	[LKON]	[LKONP]	[SCN]	[WIATA]"/>
                 <MenuItem Header="_Otwórz [DZIALKI]"  ToolTip="Format importu 1-105" Click="otworzDzialki"  />
+                <MenuItem Header="_Otwórz [KW]"  ToolTip="Format importu IdObrebu[tab]KW[tab]nrdz,nrdz..." Click="otworzKW"  />
                 <MenuItem Header="_Zapisz">
 
                     <MenuItem Header="TabelaGML" Click="ZapiszDoPliku" />
@@ -100,6 +101,7 @@
                 <MenuItem x:Name="menuItemDzialkiDlaBudynku" Header="Działki dla budynku"  ToolTip="[IdObr]		[NrBud]&#x0a;**&#x0a;[IdObr]-[NrDz]&#x0a;****" Click="MenuItemDzialkiDlaBudynku_Click"/>
                 <Separator/>
                 <MenuItem x:Name="menuItemAdresyDlaDzialek" Header="Adresy dla działek" Click="MenuItemAdresyDlaDzialek_Click" ToolTip="[IdObr]		[NrDz]&#x0a;**&#x0a;[OBRĘB],,,[kodPocztowy]&#x0a;****"/>
+                <MenuItem x:Name="menuItemKWDlaDzialek" Header="KW dla działek" Click="MenuItemKWDlaDzialek_Click" ToolTip="[IdObr]		[NrDz]      [KW]    [KDK]"/>
 
 
 
