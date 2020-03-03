@@ -18,7 +18,7 @@ namespace KartotekiWPF
         static char[] szyfr = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'W', 'Y', 'Z' };
 
 
-        public static string SprawdzCyfreKontrolna(string KsiegaWieczysta)
+        public static string SprawdzCyfreKontrolna(string KsiegaWieczysta, string obreb)
         {
 
             StringBuilder bledySB = new StringBuilder();
@@ -106,7 +106,7 @@ namespace KartotekiWPF
             }
             else
             {
-                bledySB.Append("\nZły nr KW, poprawna cyfra kontrolna =" + sumaKontrolna % 10 + " w KW " + KsiegaWieczysta);
+                bledySB.Append("\nZły nr KW, poprawna cyfra kontrolna =" + sumaKontrolna % 10 + " w KW " + KsiegaWieczysta + " w obrębie nr "+obreb);
             }
             //  Console.WriteLine("CYFRA KONTROLNA " + sumaKontrolna%10 + "KW: " + KsiegaWieczysta);
             koniec:

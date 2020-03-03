@@ -799,7 +799,7 @@ namespace KartotekiWPF
 
                         try
                         {
-                            sb.Append(BadanieKsiagWieczystych.SprawdzCyfreKontrolna(odczytanaDzialkaIKw[1].Trim()));
+                            sb.Append(BadanieKsiagWieczystych.SprawdzCyfreKontrolna(odczytanaDzialkaIKw[1].Trim(),odczytanaDzialkaIKw[0].Trim()));
                         }
                         catch (Exception re)
                         {
