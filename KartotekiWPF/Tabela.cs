@@ -615,7 +615,38 @@ namespace KartotekiWPF
             Console.WriteLine("wiata>" + _wIATA + "<");
         }
 
+       public static string weryfikacjaNrDzialki(string nrDz)
+        {
+            char[] dopuszczalneZnaki =
+            {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', '.'
+            };
 
+                StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < nrDz.Length; i++)
+            {
+                bool sprawdzCzyLipa = false;
+
+                foreach (var item in dopuszczalneZnaki)
+                {
+                    if (nrDz[i].Equals(item))
+                    {
+                        sprawdzCzyLipa = true;
+                    }
+                }
+                if(sprawdzCzyLipa==false)
+                {
+                    sb.Append("Nieprawidłowy nr działki:" + nrDz);
+                    break;
+                }
+            }
+
+            if(nrDz.IndexOf('.')>=0)
+            {
+                sb.Append("\t\t\t Ostrzeżenie nr działki zawiera kropkę:" + nrDz);
+            }
+            return sb.ToString();  
+        }
 
 
         public string wypiszPoziomoZSeparotorem(string separator)

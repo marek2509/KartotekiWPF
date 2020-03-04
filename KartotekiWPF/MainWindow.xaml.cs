@@ -96,6 +96,9 @@ namespace KartotekiWPF
             {
                 Console.WriteLine("błąd odczytu versji");
             }
+
+
+
         }
 
         private void UpdateProgress()
@@ -800,6 +803,7 @@ namespace KartotekiWPF
                         try
                         {
                             sb.Append(BadanieKsiagWieczystych.SprawdzCyfreKontrolna(odczytanaDzialkaIKw[1].Trim(),odczytanaDzialkaIKw[0].Trim()));
+                           
                         }
                         catch (Exception re)
                         {
@@ -831,8 +835,15 @@ namespace KartotekiWPF
                     for (int i = 0; i < wczytaneKartoteki.Count; i++)
                     {
                         wczytaneKartoteki[i].ustawID(i + 1);
+
                     }
 
+                    foreach (var item in wczytaneKartoteki)
+                    {
+                        Console.WriteLine(item.NrDz);
+                        if (Tabela.weryfikacjaNrDzialki(item.NrDz) == "") continue;
+                        sb.AppendLine(Tabela.weryfikacjaNrDzialki(item.NrDz));
+                    }
                   
                    
                     textBlockBledy.Text += sb.ToString();
